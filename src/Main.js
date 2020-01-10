@@ -3,6 +3,7 @@ import ViewList from './ViewList'
 import './index.css';
 import Login from './Login'
 import CreateUserForm from './CreateUserForm';
+import { update } from 'lodash-es';
 // import ReactDOM from 'react-dom';
 // import Demo from './Demo'
 
@@ -15,7 +16,8 @@ class Main extends React.Component {
         newUserFormOpen: false, 
         currentUser: null, 
         allUsers: [], 
-        userTasks: []
+        userTasks: [], 
+        sortedbyDate: [] 
     }
 
     componentDidMount() {
@@ -28,19 +30,16 @@ class Main extends React.Component {
         fetch('http://localhost:3000/api/v1/users')
         .then(resp => resp.json())
         .then(userData => this.setState({
-            allUsers: userData
-        })
+            allUsers: userData})
         )
         }
 
-
     login = (enteredName) => {
         let registeredUser = this.state.allUsers.find(user => user.username === enteredName.username)
-        return registeredUser? 
+        return registeredUser?
             this.setState({
-                currentUser: registeredUser,
-            })
-            :alert("You must first create an account.")
+                currentUser: registeredUser
+            }): alert("You must first create an account.")
         }
 
     showTaskForm = () => {
@@ -52,13 +51,43 @@ class Main extends React.Component {
     addNewTask = (newTaskObject) => {
         let newTasks = [...this.state.allTasks, newTaskObject]
         this.setState({
-          allTasks: newTasks
+          allTasks: newTasks    
         })
       }
 
     showCreateUserForm = () => {
         this.setState({
             newUserFormOpen: !this.state.newUserFormOpen
+        })
+    }
+
+    deleteTask = (taskObject) => {
+        console.log(taskObject.id)
+        let updatedTasks = this.state.allTasks.filter(task => task.id !== taskObject.id )
+        this.setState({
+            allTasks: updatedTasks
+        })
+    }
+
+    // filterUserTasks = () => {
+    //     console.log("here")
+    //     if (this.state.currentUser) {
+    //         let onlyUserTasks = this.state.allTasks.filter(task => task.user_id === this.state.currentUser.id)
+    //         console.log(onlyUserTasks)
+    //         this.setState({
+    //             userTasks: onlyUserTasks
+    //         })
+    //         }
+    //         else {
+    //             console.log("wth")
+    //         }
+    //     }
+
+    sortByDate = () => {
+        let sortTasks = this.state.allTasks.sort((a, b) => (a.importance > b.importance)? 1 : -1)
+        let sortUrgent = sortTasks.sort((a, b) => (a.urgency > b.urgency)? 1 : -1)
+        this.setState({
+            sortedbyDate: sortUrgent
         })
     }
 
@@ -72,7 +101,8 @@ class Main extends React.Component {
                 newUserFormOpen={this.state.newUserFormOpen}
                 />:null }
             {this.state.newUserFormOpen?
-            <CreateUserForm/>:null}
+            <CreateUserForm
+            />:null}
     
              <ViewList 
              allTasks={this.state.allTasks}
@@ -81,7 +111,9 @@ class Main extends React.Component {
              addNewTask={this.addNewTask}
              currentUser={this.state.currentUser}
              userTasks={this.state.userTasks}
-
+             sortByDate={this.sortByDate}
+             sortedByDate={this.state.sortedByDate}
+             deleteTask={this.deleteTask}
              />
             </div>
         )

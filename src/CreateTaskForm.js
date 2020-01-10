@@ -7,7 +7,8 @@ import './index.css';
       description: "", 
       importance: 0, 
       urgency: 0,
-      predicted_pom: 0    }
+      predicted_pom: 0    
+    }
 
     handleChange = (e) => {
       this.setState({
@@ -33,15 +34,16 @@ import './index.css';
         user_id: this.props.currentUser.id
       })
       })
-    // .then(response => response.json())
-    // .then(newTask => console.log(newTask))
+    .then(response => response.json())
+    .then(newTask => this.props.addNewTask(newTask))
       // this renders it to the screen:
-      this.props.addNewTask({
-        description: this.state.description,
-        importance: this.state.importance,
-        urgency: this.state.urgency,
-        predicted_pom: this.state.predicted_pom
-      })
+      // this.props.addNewTask({
+      //   description: this.state.description,
+      //   importance: this.state.importance,
+      //   urgency: this.state.urgency,
+      //   predicted_pom: this.state.predicted_pom,
+      //   user_id: this.props.currentUser.id
+      // })
      } else {
       alert("You must first login.")
      }
@@ -63,7 +65,7 @@ import './index.css';
               onChange={ (e) => this.handleChange(e)}
               />
               <label className="labels">Urgency (1-5): </label>
-              <input type='text' name="urgency" placeholder="e.g, 1 - can totally wait " 
+              <input type='text' name="urgency" placeholder="e.g, 1 - can wait " 
               value={this.state.urgency}
               onChange={ (e) => this.handleChange(e)}
               />
@@ -73,7 +75,7 @@ import './index.css';
               onChange={ (e) => this.handleChange(e)}
               />
               <br/>
-              <input type='submit' value='Add Task' />
+              <input type='submit' value='Save Task' />
             </form>
           </div>
       )

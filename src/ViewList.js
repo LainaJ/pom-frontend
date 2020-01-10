@@ -9,22 +9,27 @@ import CreateTaskForm from './CreateTaskForm'
 class ViewList extends React.Component {
 
     renderTasks = () => {
+      console.log(this.props.allTasks)
+      console.log(this.props.sortedByDate)
+
       if (this.props.currentUser !== null) {
        let onlyUserTasks = this.props.allTasks.filter(task => task.user_id === this.props.currentUser.id)
-      //  this.props.updateUserTasks(onlyUserTasks)
        return onlyUserTasks.map(task => <li><TaskListItem 
           task={task}
+          deleteTask={this.props.deleteTask}
           /></li> )
         }
     }
 
     render() {
-      console.log(this.props.currentUser)
       return (
         <div>
           <div className="demo8">
             <ul>{this.renderTasks()}</ul>
-            <button onClick={() => this.props.showTaskForm()}>Add Task</button>
+            {this.props.currentUser !== null? 
+            <button onClick={() => this.props.showTaskForm()}>Add Task</button>:null}
+            {this.props.currentUser !== null? 
+            <button onClick={() => this.props.sortByDate()}>Prioritize!</button>:null}
           </div>
           <div>
             {this.props.newFormOpen? <CreateTaskForm 

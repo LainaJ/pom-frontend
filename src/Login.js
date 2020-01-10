@@ -1,7 +1,7 @@
 import React from 'react';
 // import ReactDOM from 'react-dom';
 // import { NavLink } from 'react-router-dom';
-import CreateUserForm from './CreateUserForm'
+// import CreateUserForm from './CreateUserForm'
 import './index.css';
 
 
@@ -21,9 +21,8 @@ class Login extends React.Component {
       handleSubmitLogin = (e) => {
         e.preventDefault()
   
-        //render to frontend
         this.props.login({
-            username: this.state.username,
+            username: this.state.username
           })
       }
 
