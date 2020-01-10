@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './index.css';
 import Main from './Main'
 
 
@@ -7,10 +7,9 @@ class App extends React.Component {
 
   render () {
     return (
-    <div class="demo8-outer">
+      <div>
         <Main /> 
-      
-    </div>
+      </div>
     )
   }
 

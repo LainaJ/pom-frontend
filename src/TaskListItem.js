@@ -1,15 +1,17 @@
 import React from 'react';
-import './App.css';
+import './index.css';
 
 class TaskListItem extends React.Component {
 
 
 
-    
+
   render () {
     return (
-        <div className="demo8-item">
-            {this.props.task.description}
+        <div className="task-item">
+            <p>{this.props.task.description}</p>
+            <p>Importance: {this.props.task.importance}</p>
+            <button onClick={(e) => null }>Edit Task</button>
         </div>
     )
   }

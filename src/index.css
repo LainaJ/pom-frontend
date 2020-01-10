@@ -42,30 +42,19 @@ code {
   width: 320px;
   height: 400px;
 }
-.demo8-item {
-  position: absolute;
+.task-item {
   width: 320px;
-  height: 90px;
+  /* height: 90px; */
   overflow: visible;
   pointer-events: auto;
   transform-origin: 50% 50% 0px;
   border-radius: 4px;
-  color: rgb(153, 153, 153);
-  line-height: 96px;
-  padding-left: 32px;
+  color: rgb(124, 114, 114);
+  /* line-height: 96px; */
+  padding: auto;
   font-size: 24px;
   font-weight: 400;
   background-color: rgb(255, 255, 255);
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
-}
-
-.link {
-  position: absolute;
-  color: rgb(76, 76, 76);
-  text-decoration: none;
-  font: 14px/1em "Helvetica";
-  padding: 10px;
-  top: 0;
-  left: 0;
 }
