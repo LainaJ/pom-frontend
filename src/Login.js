@@ -41,7 +41,7 @@ class Login extends React.Component {
                 </div>
                 <input type="submit" value="Login" />
                 </form>
-            <button onClick={() => this.props.showCreateUserForm()}> No Account? Register Here</button>
+                <button onClick={() => this.props.showCreateUserForm()}> No Account? Register Here</button>
             </div>
             );
         };

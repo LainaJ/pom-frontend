@@ -17,6 +17,7 @@ import './index.css';
 
     handleSubmitForm = (e) => {
       e.preventDefault()
+      if (this.props.currentUser !== null) {
 
       fetch('http://localhost:3000/api/v1/tasks', { 
       method: 'POST', 
@@ -34,7 +35,6 @@ import './index.css';
       })
     // .then(response => response.json())
     // .then(newTask => console.log(newTask))
-
       // this renders it to the screen:
       this.props.addNewTask({
         description: this.state.description,
@@ -42,6 +42,9 @@ import './index.css';
         urgency: this.state.urgency,
         predicted_pom: this.state.predicted_pom
       })
+     } else {
+      alert("You must first login.")
+     }
     }
 
     render() {

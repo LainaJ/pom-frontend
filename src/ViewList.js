@@ -8,15 +8,18 @@ import CreateTaskForm from './CreateTaskForm'
 
 class ViewList extends React.Component {
 
-
     renderTasks = () => {
-        return this.props.allTasks.map(task => <li><TaskListItem 
+      if (this.props.currentUser !== null) {
+       let onlyUserTasks = this.props.allTasks.filter(task => task.user_id === this.props.currentUser.id)
+      //  this.props.updateUserTasks(onlyUserTasks)
+       return onlyUserTasks.map(task => <li><TaskListItem 
           task={task}
           /></li> )
+        }
     }
 
-
     render() {
+      console.log(this.props.currentUser)
       return (
         <div>
           <div className="demo8">

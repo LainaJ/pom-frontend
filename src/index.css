@@ -20,16 +20,13 @@ code {
   user-select: none;
 }
 
-/* body {
-  cursor: url('cursor.png') 39 39, auto;
-} */
-
 .demo8-outer {
   background-color: #EEE;
   color: #FFF;
   position: absolute;
   width: 100%;
   height: 100%;
+  margin-top: auto;
   font: 28px/1em "Helvetica";
   display: flex;
   justify-content: center;
@@ -38,6 +35,28 @@ code {
   -webkit-justify-content: center;
   -webkit-align-items: center;
 }
+
+.nav {
+  background-color: #fff;
+  height: 60px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  float: left;
+  z-index: 9;
+  font-weight: bolder;
+}
+
+.create-form{
+  /* padding: 1rem;
+  text-align: center; */
+}
+
+/* body {
+  cursor: url('cursor.png') 39 39, auto;
+} */
+
+
 .demo8 {
   width: 320px;
   height: 400px;

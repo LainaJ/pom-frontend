@@ -14,7 +14,8 @@ class Main extends React.Component {
         newFormOpen: false,
         newUserFormOpen: false, 
         currentUser: null, 
-        allUsers: []
+        allUsers: [], 
+        userTasks: []
     }
 
     componentDidMount() {
@@ -33,15 +34,13 @@ class Main extends React.Component {
         }
 
 
-    login = (username) => {
-        // console.log(username)
-        // console.log(this.state.allUsers)
-        let registeredUser = this.state.allUsers.find(username)
-        console.log(registeredUser)
+    login = (enteredName) => {
+        let registeredUser = this.state.allUsers.find(user => user.username === enteredName.username)
+        return registeredUser? 
             this.setState({
-                currentUser: username
+                currentUser: registeredUser,
             })
-        //     "Sorry, you must register first."
+            :alert("You must first create an account.")
         }
 
     showTaskForm = () => {
@@ -57,13 +56,7 @@ class Main extends React.Component {
         })
       }
 
-        //       addNewUser = (newUserObject) => {null
-        // //add front end user logic later? as above?
-            
-        //       }
-
     showCreateUserForm = () => {
-        console.log("got here")
         this.setState({
             newUserFormOpen: !this.state.newUserFormOpen
         })
@@ -72,24 +65,27 @@ class Main extends React.Component {
     render() {
         return (
             <div className="demo8-outer">
-            {!this.state.currentUser?
+            {!this.state.currentUser && !this.state.newUserFormOpen?
              <Login 
                 login={this.login}
                 showCreateUserForm={this.showCreateUserForm}
                 newUserFormOpen={this.state.newUserFormOpen}
                 />:null }
-            <CreateUserForm/>
+            {this.state.newUserFormOpen?
+            <CreateUserForm/>:null}
+    
              <ViewList 
              allTasks={this.state.allTasks}
              showTaskForm ={this.showTaskForm}
              newFormOpen={this.state.newFormOpen}
              addNewTask={this.addNewTask}
              currentUser={this.state.currentUser}
+             userTasks={this.state.userTasks}
+
              />
             </div>
         )
     }
-
 }
 
 
