@@ -51,7 +51,7 @@ import './index.css';
 
     render() {
       return (
-        <div>
+        <div >
           <h1>Add a Task</h1>
             <form className="create-form" onSubmit={this.handleSubmitForm}>
               <label className="labels">Task: </label>
