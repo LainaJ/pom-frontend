@@ -30,6 +30,8 @@ import './index.css';
         password: this.state.password
       })
       })
+      this.props.routerProps.history.push("/login")
+
     // .then(response => response.json())
     // .then(newTask => console.log(newTask))
 

@@ -21,9 +21,12 @@ class Login extends React.Component {
       handleSubmitLogin = (e) => {
         e.preventDefault()
   
-        this.props.login({
+        this.props.login(      
+          {
             username: this.state.username
           })
+          this.props.routerProps.history.push("/list")
+
       }
 
         render () {
@@ -40,7 +43,7 @@ class Login extends React.Component {
                 </div>
                 <input type="submit" value="Login" />
                 </form>
-                <button onClick={() => this.props.showCreateUserForm()}> No Account? Register Here</button>
+                <button onClick={() => this.props.routerProps.history.push("/register")}> No Account? Register Here</button>
             </div>
             );
         };

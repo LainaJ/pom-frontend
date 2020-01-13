@@ -24,7 +24,8 @@ class ViewList extends React.Component {
     render() {
       return (
         <div>
-          <div >
+          <div>
+            <h1>{this.props.currentUser.username}'s To-Do</h1>
             <ul>{this.renderTasks()}</ul>
             {this.props.currentUser !== null? 
             <button onClick={() => this.props.showTaskForm()}>Add Task</button>:null}

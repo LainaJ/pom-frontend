@@ -1,7 +1,7 @@
 import React from 'react';
+import Navbar from './Navbar'
 import './index.css';
 import Main from './Main'
-import Navbar from './Navbar'
 
 
 class App extends React.Component {
@@ -10,7 +10,8 @@ class App extends React.Component {
     return (
       <div>
         <Navbar/>
-        <Main /> 
+        <Main />
+
       </div>
     )
   }

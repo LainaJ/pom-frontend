@@ -3,8 +3,10 @@ import ViewList from './ViewList'
 import './index.css';
 import Login from './Login'
 import CreateUserForm from './CreateUserForm';
-import { update } from 'lodash-es';
+import Pomodoro from './Pomodoro'
+// import { update } from 'lodash-es';
 // import ReactDOM from 'react-dom';
+import { Route, Switch } from 'react-router-dom';
 // import Demo from './Demo'
 
 class Main extends React.Component {
@@ -34,8 +36,24 @@ class Main extends React.Component {
         )
         }
 
+    renderRegister = (routerProps) => {
+        return <CreateUserForm
+        routerProps={routerProps} 
+        />
+    }
+
+    renderLogin = (routerProps) => {
+        return <Login 
+        routerProps={routerProps} 
+        login={this.login} 
+        showCreateUserForm={this.showCreateUserForm}
+        newUserFormOpen={this.state.newUserFormOpen}
+        />
+        }
+
     login = (enteredName) => {
         let registeredUser = this.state.allUsers.find(user => user.username === enteredName.username)
+ 
         return registeredUser?
             this.setState({
                 currentUser: registeredUser
@@ -62,7 +80,6 @@ class Main extends React.Component {
     }
 
     deleteTask = (taskObject) => {
-        console.log(taskObject.id)
         let updatedTasks = this.state.allTasks.filter(task => task.id !== taskObject.id )
         this.setState({
             allTasks: updatedTasks
@@ -94,27 +111,47 @@ class Main extends React.Component {
     render() {
         return (
             <div className="demo8-outer">
-            {!this.state.currentUser && !this.state.newUserFormOpen?
-             <Login 
-                login={this.login}
-                showCreateUserForm={this.showCreateUserForm}
-                newUserFormOpen={this.state.newUserFormOpen}
-                />:null }
-            {this.state.newUserFormOpen?
-            <CreateUserForm
-            />:null}
-    
-             <ViewList 
-             allTasks={this.state.allTasks}
-             showTaskForm ={this.showTaskForm}
-             newFormOpen={this.state.newFormOpen}
-             addNewTask={this.addNewTask}
-             currentUser={this.state.currentUser}
-             userTasks={this.state.userTasks}
-             sortByDate={this.sortByDate}
-             sortedByDate={this.state.sortedByDate}
-             deleteTask={this.deleteTask}
-             />
+            <Switch />
+            {!this.state.currentUser 
+            // && !this.state.newUserFormOpen
+            ?
+            <Route path="/login" render={this.renderLogin}/>:null}
+            
+            {/* render={() => 
+                // <Login 
+                    // routerProps={routerProps}
+                    // login={this.login}
+                    // showCreateUserForm={this.showCreateUserForm}
+                    // newUserFormOpen={this.state.newUserFormOpen}
+                    // />}/>:null }
+            {this.state.newUserFormOpen? */}
+            <Route path="/register" render={this.renderRegister}/>
+
+
+            {/* <Route path="/register" render={() => 
+                <CreateUserForm
+                />}/> */}
+                {/* :null} */}
+            {this.state.currentUser?
+            <Route path="/list" render={() => 
+                <ViewList 
+                allTasks={this.state.allTasks}
+                showTaskForm ={this.showTaskForm}
+                newFormOpen={this.state.newFormOpen}
+                addNewTask={this.addNewTask}
+                currentUser={this.state.currentUser}
+                userTasks={this.state.userTasks}
+                sortByDate={this.sortByDate}
+                sortedByDate={this.state.sortedByDate}
+                deleteTask={this.deleteTask}
+                />}/>:null}
+                {/* else render login component?  */}
+            <Route path="/pomodoro" render={() => 
+                <Pomodoro
+                defaultBreakLength='5' 
+                defaultSessionLength='25'
+                />}/>
+             <Switch />
             </div>
         )
     }

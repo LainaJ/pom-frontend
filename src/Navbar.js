@@ -1,6 +1,6 @@
 import React from 'react';
 // import ReactDOM from 'react-dom';
-// import { NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import './index.css';
 
 const link = {
@@ -23,8 +23,12 @@ class Navbar extends React.Component {
             {/* set exact so it knows to only set activeStyle when route is deeply equal to link
             styling to Navlink 
             prop for activeStyle */}
-          {/* <NavLink to="/favorites" exact style={link} activeStyle={{background: 'darkgrey'}}>Favorites</NavLink> */}
-          {/* <NavLink to="/new" exact style={link} activeStyle={{background: 'darkgrey'}}>Add Tunnel</NavLink>  */}
+          <NavLink to="/login" exact style={link} activeStyle={{background: 'darkgrey'}}>Login</NavLink> 
+          <NavLink to="/register" exact style={link} activeStyle={{background: 'darkgrey'}}>Register</NavLink>
+          <NavLink to="/list" exact style={link} activeStyle={{background: 'darkgrey'}}>List</NavLink> 
+          <NavLink to="/pomodoro" exact style={link} activeStyle={{background: 'darkgrey'}}>Pomodoro</NavLink> 
+
+
           <p className="app-title">POM</p>
         </div>
         );

@@ -17,6 +17,8 @@ class TaskListItem extends React.Component {
     this.props.deleteTask(task)
   }
 
+  defaultBreakLength
+
   render () {
     return (
         <div className="task-item">
@@ -25,6 +27,7 @@ class TaskListItem extends React.Component {
             <p>Urgency: {this.props.task.urgency}</p>
             <button onClick={(e) => null }>Edit Task</button>
             <button onClick={(e) => this.handleDeleteTask(e, this.props.task)}>X</button>
+      
         </div>
     )
   }
