@@ -9,12 +9,19 @@ import CreateTaskForm from './CreateTaskForm'
 class ViewList extends React.Component {
 
     renderTasks = () => {
-      console.log(this.props.allTasks)
-      console.log(this.props.sortedByDate)
-
-      if (this.props.currentUser !== null) {
+      console.log(this.props.usersPrioritizedTasks)
+      // if (this.props.usersPrioritizedTasks !== []) {
+      //   return this.props.usersPrioritizedTasks.map(task => <li><TaskListItem 
+      //     key={task.id}
+      //     task={task}
+      //     deleteTask={this.props.deleteTask}
+      //     /></li> )
+      // }
+      // else
+       if (this.props.currentUser !== null) {
        let onlyUserTasks = this.props.allTasks.filter(task => task.user_id === this.props.currentUser.id)
        return onlyUserTasks.map(task => <li><TaskListItem 
+          key={task.id}
           task={task}
           deleteTask={this.props.deleteTask}
           /></li> )
@@ -30,7 +37,11 @@ class ViewList extends React.Component {
             {this.props.currentUser !== null? 
             <button onClick={() => this.props.showTaskForm()}>Add Task</button>:null}
             {this.props.currentUser !== null? 
-            <button onClick={() => this.props.sortByDate()}>Prioritize!</button>:null}
+            <button onClick={() => this.props.prioritize()}>Prioritize!</button>:null}
+            {this.props.currentUser !== null? 
+            <button onClick={() => this.props.savePrioritized()}>Save My Priorities</button>:null}
+            {this.props.currentUser !== null && this.props.savePrioritized !== null?
+            <button onClick={() => this.props.viewSavedPrioritized()}>View Saved Prioritized</button>:null}
           </div>
           <div>
             {this.props.newFormOpen? <CreateTaskForm 
