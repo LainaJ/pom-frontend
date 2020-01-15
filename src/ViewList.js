@@ -17,28 +17,36 @@ class ViewList extends React.Component {
   };
 
   onDrop = (ev, category) => {
-    // console.log("onDrop:");
     let id = ev.dataTransfer.getData("id");
     // console.log(this.props.usersPrioritizedTasks)
-    let tasks = this.props.usersPrioritizedTasks.filter(task => {
+    let tasks = this.props.userTasks.filter(task => {
       let newId = parseInt(id);
       if (task.id === newId) {
-        // console.log(task);
-        // console.log(id);
         task.category = category;
       }
       return task;
-    });
-    // this.setState({
-    //     ...this.state,
-    //     tasks
-    // });
-    this.props.updateStateFromDrop(tasks);
-  };
+    })
+    this.props.updateStateFromDrop(tasks)
+    
+    tasks.map(task => 
+      fetch(`http://localhost:3000/api/v1/tasks/${task.id}`, {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
+          accept: "application/json"
+        },
+        body: JSON.stringify({
+          category: task.category
+        })
+      }).then(response => response.json())
+        .then(updatedTasks => console.log("let's see if category of completed persisted:", updatedTasks))
+    )
+
+  }//end onDrop
 
   renderTasks = () => {
-    console.log("renderingTasks once logged in")
-    if (this.props.currentUser !== null) {
+    console.log("renderingTasks: it shouldn't get here after I'm logged in")
+    if (this.props.currentUser !== null && this.props.havePrioritized !== true) {
       let onlyUserTasks = this.props.allTasks.filter(
         task => task.user_id === this.props.currentUser.id
       );
@@ -56,16 +64,36 @@ class ViewList extends React.Component {
             deleteTask={this.props.deleteTask}
           />
         </div>
-      ));
+      ))
     }
-  };
+    else if (this.props.currentUser !== null && this.props.havePrioritized === true) {
+      // let onlyUserTasks = this.props.allTasks.filter(
+      //   task => task.user_id === this.props.currentUser.id
+      // );
+      return this.props.usersPrioritizedTasks.map(task => (
+        <div
+          key={task.id}
+          onDragStart={e => this.onDragStart(e, task)}
+          draggable="true"
+          className="draggable"
+          task={task}
+        >
+          <TaskListItem
+            key={task.id}
+            task={task}
+            deleteTask={this.props.deleteTask}
+          />
+        </div>
+      ))
 
-  renderSaved = () => {
-    console.log("renderSaved:", this.props.usersPrioritizedTasks);
-    console.log("completed tasks during renderSaved:", this.props.complete);
-    console.log("completed tasks during renderSaved:", this.props.complete);
-    let wip = this.props.usersPrioritizedTasks.filter(task => task.category === "wip")
-    console.log("wip at renderSaved:", wip)
+
+
+    }
+  }
+
+  renderTodos = () => {
+    let wip = this.props.userTasks.filter(task => task.category === "wip")
+    console.log("wip at renderTodos:", wip)
     return wip.map(task => (
       <div
         key={task.id}
@@ -84,8 +112,8 @@ class ViewList extends React.Component {
   };
 
   renderComplete = () => {
-    let completed = this.props.complete;
-    console.log("renderCompleted:", completed);
+    let completed = this.props.userTasks.filter(task => task.category === "complete")
+    console.log(" completed at renderComplete:", completed);
     return completed.map(task => (
       <div
         key={task.id}
@@ -117,10 +145,9 @@ class ViewList extends React.Component {
             <span className="task-header">
               {this.props.currentUser.username}'s To-Dos
             </span>
-            {this.props.usersPrioritizedTasks.length > 0 &&
-            this.props.wip !== []
-              ? this.renderSaved()
-              : this.renderTasks()}
+            {this.props.userTasks.length > 0?
+             this.renderTodos()
+              :this.renderTasks()}
             {this.props.currentUser !== null ? (
               <button onClick={() => this.props.showTaskForm()}>
                 Add Task
@@ -149,7 +176,7 @@ class ViewList extends React.Component {
             onDrop={e => this.onDrop(e, "complete")}
           >
             <span className="task-header">COMPLETED</span>
-            {this.props.usersPrioritizedTasks.length > 0 &&
+            {this.props.userTasks.length > 0 &&
             this.props.complete !== []
               ? this.renderComplete()
               : null}

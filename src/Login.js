@@ -24,7 +24,7 @@ class Login extends React.Component {
       username: this.state.username
     });
     //then call a function that sets state of UserTasks to those that match the current ID
-    this.props.routerProps.history.push("/list");
+    this.props.routerProps.history.push("/welcome");
   };
 
   render() {

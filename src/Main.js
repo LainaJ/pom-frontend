@@ -4,6 +4,7 @@ import './index.css';
 import Login from './Login'
 import CreateUserForm from './CreateUserForm';
 import Pomodoro from './Pomodoro'
+import Welcome from './Welcome'
 // import { update } from 'lodash-es';
 // import ReactDOM from 'react-dom';
 import { Route, Switch } from 'react-router-dom';
@@ -18,6 +19,7 @@ class Main extends React.Component {
     allUsers: [],
     userTasks: [],
     usersPrioritizedTasks: [],
+    havePrioritized: false,
     haveSavedPrioritized: false,
     wip: [],
     complete: []
@@ -29,6 +31,8 @@ class Main extends React.Component {
       .then(taskData =>
         this.setState({
           allTasks: taskData
+          //   ,
+          //   complete: taskData.filter(task => task.category === "complete")
         })
       );
     fetch("http://localhost:3000/api/v1/users")
@@ -62,9 +66,29 @@ class Main extends React.Component {
     );
     return registeredUser
       ? this.setState({
-          currentUser: registeredUser
+          currentUser: registeredUser,
+          userTasks: this.state.allTasks.filter(task => task.user_id === registeredUser.id )
         })
       : alert("You must first create an account.");
+  };
+
+  renderWelcome = (routerProps) => {
+    return (
+      <Welcome
+        key={Welcome.id}
+        currentUser={this.state.currentUser}
+        userTasks={this.state.userTasks}
+        routerProps={routerProps}
+        // prioritize={this.prioritize}
+        // deleteTask={this.deleteTask}
+        usersPrioritizedTasks={this.state.usersPrioritizedTasks}
+        // viewSavedPrioritized={this.viewSavedPrioritized}
+        // updateStateFromDrop={this.updateStateFromDrop}
+        // editCompleted={this.editCompleted}
+        wip={this.state.wip}
+        complete={this.state.complete}
+      />
+    );
   };
 
   showTaskForm = () => {
@@ -73,14 +97,14 @@ class Main extends React.Component {
     });
   };
 
-
-//the second line of this is sometimes the difference between bugginess//look into otherwise
+  //the third line of this is sometimes the difference between bugginess//look into otherwise
   addNewTask = newTaskObject => {
-    let newTasks = [...this.state.allTasks, newTaskObject];
+    let newTasks = [...this.state.allTasks, newTaskObject]
     this.setState({
-      allTasks: newTasks
-        ,
-        usersPrioritizedTasks: [...this.state.usersPrioritizedTasks, newTaskObject]
+      allTasks: newTasks,
+      userTasks: [...this.state.userTasks, newTaskObject],
+      usersPrioritizedTasks: [...this.state.usersPrioritizedTasks, newTaskObject
+      ]
     });
   };
 
@@ -93,30 +117,31 @@ class Main extends React.Component {
   deleteTask = taskObject => {
     let updatedTasks = this.state.allTasks.filter(
       task => task.id !== taskObject.id
-    );
-    let updatedUserTasks = this.state.usersPrioritizedTasks.filter(
+    )
+    let updatedPTasks = this.state.usersPrioritizedTasks.filter(
       task => task.id !== taskObject.id
-    );
+    )
+    let updatedUserTasks = this.state.userTasks.filter(
+        task => task.id !== taskObject.id
+      )
     this.setState({
       allTasks: updatedTasks,
-      usersPrioritizedTasks: updatedUserTasks
-    });
+      usersPrioritizedTasks: updatedPTasks,
+      userTasks: updatedUserTasks
+    })
   };
 
   prioritize = () => {
     if (this.state.currentUser !== null) {
-      // if (this.state.prioritizedTasks !== [] && this.state.currentUser !== null) {
-      let onlyUserTasks = this.state.allTasks.filter(
-        task => task.user_id === this.state.currentUser.id
-      );
-      let firstSortedUserTasks = onlyUserTasks.sort((a, b) =>
+      let firstSortedUserTasks = this.state.userTasks.sort((a, b) =>
         a.importance > b.importance ? 1 : -1
       );
       let sortAllUser = firstSortedUserTasks.sort((a, b) =>
         a.urgency > b.urgency ? 1 : -1
       );
       this.setState({
-        usersPrioritizedTasks: sortAllUser
+        usersPrioritizedTasks: sortAllUser, 
+        havePrioritized: !this.state.havePrioritized
       });
     }
   };
@@ -169,6 +194,7 @@ class Main extends React.Component {
   };
 
   render() {
+    console.log(this.state.userTasks)
     console.log("wip:", this.state.wip);
     console.log("complete:", this.state.complete);
     return (
@@ -182,7 +208,6 @@ class Main extends React.Component {
         {/* </div> */}
         <Switch />
         {!this.state.currentUser ? (
-          // && !this.state.newUserFormOpen
           <Route path="/login" render={this.renderLogin} />
         ) : null}
         <Route path="/register" render={this.renderRegister} />
@@ -206,13 +231,13 @@ class Main extends React.Component {
                 editCompleted={this.editCompleted}
                 wip={this.state.wip}
                 complete={this.state.complete}
+                havePrioritized={this.state.havePrioritized}
               />
             )}
           />
         ) : null}
-        {/* else render login component?  */}
-        <Route
-          path="/pomodoro"
+        <Route path="/welcome" render={this.renderWelcome} />
+        <Route path="/pomodoro"
           render={() => (
             <Pomodoro defaultBreakLength="5" defaultSessionLength="25" />
           )}

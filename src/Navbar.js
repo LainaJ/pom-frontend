@@ -54,6 +54,16 @@ class Navbar extends React.Component {
         >
           Pomodoro
         </NavLink>
+        <NavLink
+          to="/welcome"
+          exact
+          style={link}
+          activeStyle={{ background: "darkgrey" }}
+        >
+          Home
+        </NavLink>
+
+          
         {/* <p className="app-title">POM</p> */}
       </div>
     );
