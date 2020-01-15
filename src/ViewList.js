@@ -7,32 +7,30 @@ import CreateTaskForm from './CreateTaskForm'
 
 
 class ViewList extends React.Component {
-
-
   onDragStart = (ev, task) => {
-    console.log('dragstart:', task)
-    ev.dataTransfer.setData("id", task.id)
-  }
+    console.log("dragstart:", task);
+    ev.dataTransfer.setData("id", task.id);
+  };
 
-  onDragOver = (ev) => {
-    ev.preventDefault()
-    console.log('dragover:')
-  }
+  onDragOver = ev => {
+    ev.preventDefault();
+    console.log("dragover:");
+  };
 
   onDrop = (ev, category) => {
-    console.log("onDrop:")
-    let id = ev.dataTransfer.getData("id")
+    console.log("onDrop:");
+    let id = ev.dataTransfer.getData("id");
     // console.log(this.props.usersPrioritizedTasks)
-    console.log(id)
-    let tasks = this.props.usersPrioritizedTasks.filter((task) => {
-      console.log(task)
-      let newId = parseInt(id)
-        if (task.id === newId ) {
-          console.log(task)
-          console.log(id)
-            task.category = category
-        }
-        return task;
+    console.log(id);
+    let tasks = this.props.usersPrioritizedTasks.filter(task => {
+      console.log(task);
+      let newId = parseInt(id);
+      if (task.id === newId) {
+        console.log(task);
+        console.log(id);
+        task.category = category;
+      }
+      return task;
     });
 
     // this.setState({
@@ -40,100 +38,135 @@ class ViewList extends React.Component {
     //     tasks
     // });
 
-    this.props.updateStateFromDrop(tasks)
- }
+    this.props.updateStateFromDrop(tasks);
+  };
 
-    renderTasks = () => {
-       if (this.props.currentUser !== null) {
-        let onlyUserTasks = this.props.allTasks.filter(task => task.user_id === this.props.currentUser.id)
-        return onlyUserTasks.map(task => <div
-            key={task.id} 
-            onDragStart = {(e) => this.onDragStart(e, task)}
-            draggable="true"
-            className="draggable"
+  renderTasks = () => {
+    if (this.props.currentUser !== null) {
+      let onlyUserTasks = this.props.allTasks.filter(
+        task => task.user_id === this.props.currentUser.id
+      );
+      return onlyUserTasks.map(task => (
+        <div
+          key={task.id}
+          onDragStart={e => this.onDragStart(e, task)}
+          draggable="true"
+          className="draggable"
+          task={task}
+        >
+          <TaskListItem
+            key={task.id}
             task={task}
-            >
-              <TaskListItem 
-                key={task.id}
-                task={task}
-                deleteTask={this.props.deleteTask}
-            /></div> )
-          }
+            deleteTask={this.props.deleteTask}
+          />
+        </div>
+      ));
     }
+  };
 
-    renderSaved = () => {
-      console.log("renderSaved:", this.props.usersPrioritizedTasks)
-      return this.props.usersPrioritizedTasks.map(task => <div
-        key={task.id} 
-        onDragStart = {(e) => this.onDragStart(e, task)}
+  renderSaved = () => {
+    console.log("renderSaved:", this.props.usersPrioritizedTasks);
+    return this.props.usersPrioritizedTasks.map(task => (
+      <div
+        key={task.id}
+        onDragStart={e => this.onDragStart(e, task)}
         draggable="true"
         className="draggable"
         task={task}
-        >
-      <TaskListItem 
-         key={task.id}
-         task={task}
-         deleteTask={this.props.deleteTask}
-         /></div> )
-    }
+      >
+        <TaskListItem
+          key={task.id}
+          task={task}
+          deleteTask={this.props.deleteTask}
+        />
+      </div>
+    ));
+  };
 
-    renderComplete = () => {
-      let completed = this.props.complete
-      console.log("completed:", completed)
-      return completed.map(task => <div
-        key={task.id} 
-        onDragStart = {(e) => this.onDragStart(e, task)}
+  renderComplete = () => {
+    let completed = this.props.complete;
+    console.log("completed:", completed);
+    return completed.map(task => (
+      <div
+        key={task.id}
+        onDragStart={e => this.onDragStart(e, task)}
         draggable="true"
         className="draggable"
         task={task}
-        >
-      <TaskListItem 
-         key={task.id}
-         task={task}
-         deleteTask={this.props.deleteTask}
-         /></div> )
-    }
+      >
+        <TaskListItem
+          key={task.id}
+          task={task}
+          deleteTask={this.props.deleteTask}
+        />
+      </div>
+    ));
+  };
 
-    render() {
-      return (
-        <div className="main">
-          <div className="container-drag">
-            <div className="wip"
-                    onDragOver={(e)=>this.onDragOver(e)}
-                    onDrop={(e)=>{this.onDrop(e, "wip")}}>
-                    <span className="task-header">{this.props.currentUser.username}'s To-Dos</span>
-                    {/* {this.props.wip}  */}
-                  {this.props.usersPrioritizedTasks.length > 0 ?
-                    this.renderSaved():this.renderTasks()}
-        
-                  {this.props.currentUser !== null? 
-                    <button onClick={() => this.props.showTaskForm()}>Add Task</button>:null}
-                  {this.props.currentUser !== null? 
-                    <button onClick={() => this.props.prioritize()}>Prioritize</button>:null}
-                  {this.props.currentUser !== null && this.props.savePrioritized !== null?
-                    <button onClick={() => this.props.viewSavedPrioritized()}>View Saved Prioritized</button>:null}
-                  {this.props.currentUser !== null?
-                    <button onClick={() => this.props.editCompleted()}>Edit Completed</button>:null}
-              </div>
-              <div className="droppable"
-                onDragOver={(e)=>this.onDragOver(e)}
-                onDrop={(e)=>this.onDrop(e, "complete")}>
-                <span className="task-header">COMPLETED</span>
-                {this.props.usersPrioritizedTasks.length > 0 && this.props.complete !== [] ?
-                    this.renderComplete():null}
-              </div>
-            </div>
-            <div className="create-form">
-                {this.props.newFormOpen? <CreateTaskForm 
-                addNewTask={this.props.addNewTask} 
-                currentUser={this.props.currentUser}
-                />: null}
-            </div>
+  render() {
+    return (
+      <div className="main">
+        <div className="container-drag">
+          <div
+            className="wip"
+            onDragOver={e => this.onDragOver(e)}
+            onDrop={e => {
+              this.onDrop(e, "wip");
+            }}
+          >
+            <span className="task-header">
+              {this.props.currentUser.username}'s To-Dos
+            </span>
+            {/* {this.props.wip}  */}
+            {this.props.usersPrioritizedTasks.length > 0
+              ? this.renderSaved()
+              : this.renderTasks()}
+
+            {this.props.currentUser !== null ? (
+              <button onClick={() => this.props.showTaskForm()}>
+                Add Task
+              </button>
+            ) : null}
+            {this.props.currentUser !== null ? (
+              <button onClick={() => this.props.prioritize()}>
+                Prioritize
+              </button>
+            ) : null}
+            {this.props.currentUser !== null &&
+            this.props.savePrioritized !== null ? (
+              <button onClick={() => this.props.viewSavedPrioritized()}>
+                Save Prioritized
+              </button>
+            ) : null}
+            {this.props.currentUser !== null ? (
+              <button onClick={() => this.props.editCompleted()}>
+                Edit Completed
+              </button>
+            ) : null}
           </div>
-      )
+          <div
+            className="droppable"
+            onDragOver={e => this.onDragOver(e)}
+            onDrop={e => this.onDrop(e, "complete")}
+          >
+            <span className="task-header">COMPLETED</span>
+            {this.props.usersPrioritizedTasks.length > 0 &&
+            this.props.complete !== []
+              ? this.renderComplete()
+              : null}
+          </div>
+        </div>
+        <div className="create-form">
+          {this.props.newFormOpen ? (
+            <CreateTaskForm
+              addNewTask={this.props.addNewTask}
+              currentUser={this.props.currentUser}
+            />
+          ) : null}
+        </div>
+      </div>
+    );
   }
-
-
 }
 
 

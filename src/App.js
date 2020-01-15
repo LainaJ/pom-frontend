@@ -1,19 +1,16 @@
-import React from 'react';
-import Navbar from './Navbar'
-import './index.css';
-import Main from './Main'
-
+import React from "react";
+import Navbar from "./Navbar";
+import "./index.css";
+import Main from "./Main";
 
 class App extends React.Component {
-
-  render () {
+  render() {
     return (
       <div>
-        <Navbar/>
+        <Navbar />
         <Main />
-
       </div>
-    )
+    );
   }
 }
 

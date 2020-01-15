@@ -2,87 +2,97 @@ import React from 'react'
 import './index.css';
 
   class CreateTaskForm extends React.Component {
-
     state = {
-      description: "", 
-      importance: 0, 
+      description: "",
+      importance: 0,
       urgency: 0,
-      predicted_pom: 0    
-    }
+      predicted_pom: 0
+    };
 
-    handleChange = (e) => {
+    handleChange = e => {
       this.setState({
         [e.target.name]: e.target.value
-      })
-    }
+      });
+    };
 
-    handleSubmitForm = (e) => {
-      e.preventDefault()
+    handleSubmitForm = e => {
+      e.preventDefault();
       if (this.props.currentUser !== null) {
-
-      fetch('http://localhost:3000/api/v1/tasks', { 
-      method: 'POST', 
-      headers: {
-        'content-type':'application/json',
-        'accept': 'application/json'
-      },
-      body: JSON.stringify({
-        description: this.state.description,
-        importance: this.state.importance,
-        urgency: this.state.urgency,
-        predicted_pom: this.state.predicted_pom, 
-        user_id: this.props.currentUser.id, 
-        category: "wip",
-        complete_status: false
-      })
-      })
-    .then(response => response.json())
-    .then(newTask => this.props.addNewTask(newTask))
-      // this renders it to the screen:
-      // this.props.addNewTask({
-      //   description: this.state.description,
-      //   importance: this.state.importance,
-      //   urgency: this.state.urgency,
-      //   predicted_pom: this.state.predicted_pom,
-      //   user_id: this.props.currentUser.id
-      // })
-     } else {
-      alert("You must first login.")
-     }
-    }
+        fetch("http://localhost:3000/api/v1/tasks", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            accept: "application/json"
+          },
+          body: JSON.stringify({
+            description: this.state.description,
+            importance: this.state.importance,
+            urgency: this.state.urgency,
+            predicted_pom: this.state.predicted_pom,
+            user_id: this.props.currentUser.id,
+            category: "wip",
+            complete_status: false
+          })
+        })
+          .then(response => response.json())
+          .then(newTask => this.props.addNewTask(newTask));
+        // this renders it to the screen:
+        // this.props.addNewTask({
+        //   description: this.state.description,
+        //   importance: this.state.importance,
+        //   urgency: this.state.urgency,
+        //   predicted_pom: this.state.predicted_pom,
+        //   user_id: this.props.currentUser.id
+        // })
+      } else {
+        alert("You must first login.");
+      }
+    };
 
     render() {
       return (
-        <div >
+        <div>
           <h1>Add a Task</h1>
-            <form onSubmit={this.handleSubmitForm}>
-              <label className="labels">Task: </label>
-              <input type='text' name="description" placeholder="(e.g., Write blog post)"
-              value={this.state.description} 
-              onChange={ (e) => this.handleChange(e)}
-              />
-              <br/>
-              <label className="labels">Importance (1-5): </label>
-              <input type='text' name="importance" placeholder="e.g., 5 - super important" 
+          <form onSubmit={this.handleSubmitForm}>
+            <label className="labels">Task: </label>
+            <input
+              type="text"
+              name="description"
+              placeholder="(e.g., Write blog post)"
+              value={this.state.description}
+              onChange={e => this.handleChange(e)}
+            />
+            <br />
+            <label className="labels">Importance (1-5): </label>
+            <input
+              type="text"
+              name="importance"
+              placeholder="e.g., 5 - super important"
               value={this.state.importance}
-              onChange={ (e) => this.handleChange(e)}
-              />
-              <br/>
-              <label className="labels">Due Date: </label>
-              <input type='text' name="urgency" placeholder="e.g, 01-20-2020 " 
+              onChange={e => this.handleChange(e)}
+            />
+            <br />
+            <label className="labels">Due Date: </label>
+            <input
+              type="text"
+              name="urgency"
+              placeholder="e.g, 01-20-2020 "
               value={this.state.urgency}
-              onChange={ (e) => this.handleChange(e)}
-              />
-              <label className="labels">Predicted Pomodoros: </label>
-              <input type='text' name="predicted_pom" placeholder="e.g., 3" 
+              onChange={e => this.handleChange(e)}
+            />
+            <label className="labels">Predicted Pomodoros: </label>
+            <input
+              type="text"
+              name="predicted_pom"
+              placeholder="e.g., 3"
               value={this.state.image}
-              onChange={ (e) => this.handleChange(e)}
-              />
-              <br/>
-              <input type='submit' value='Save Task' />
-            </form>
-          </div>
-      )
+              onChange={e => this.handleChange(e)}
+            />
+            <br />
+            <input type="submit" value="Save Task" />
+          </form>
+        </div>
+      );
     }
   }
 

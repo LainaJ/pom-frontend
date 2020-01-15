@@ -125,7 +125,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className="pomodoro-clock">
+      <div className="pomodoro-clock clock-background">
         <div className="pomodoro-clock-header">
           <h1 className="pomodoro-clock-header-name">Pomodoro Clock</h1>
         </div>
@@ -151,8 +151,12 @@ export default class App extends Component {
           isStart={this.state.isStart}
         />
 
-        <audio id="beep" preload="auto" src="https://goo.gl/65cBl1" ref={this.audioBeep}></audio>
-    
+        <audio
+          id="beep"
+          preload="auto"
+          src="https://goo.gl/65cBl1"
+          ref={this.audioBeep}
+        ></audio>
       </div>
     );
   }

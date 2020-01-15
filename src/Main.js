@@ -9,187 +9,217 @@ import Pomodoro from './Pomodoro'
 import { Route, Switch } from 'react-router-dom';
 
 class Main extends React.Component {
+  state = {
+    allTasks: [],
+    showLogin: true,
+    newFormOpen: false,
+    newUserFormOpen: false,
+    currentUser: null,
+    allUsers: [],
+    userTasks: [],
+    usersPrioritizedTasks: [],
+    haveSavedPrioritized: false,
+    wip: [],
+    complete: []
+  };
 
-    state = {
-        allTasks: [],
-        showLogin: true,
-        newFormOpen: false,
-        newUserFormOpen: false, 
-        currentUser: null, 
-        allUsers: [], 
-        userTasks: [], 
-        usersPrioritizedTasks: [],
-        haveSavedPrioritized: false,
-        wip: [],
-        complete: []
-    }
-
-    componentDidMount() {
-        fetch('http://localhost:3000/api/v1/tasks')
-        .then(resp => resp.json())
-        .then(taskData => this.setState({
-            allTasks: taskData
+  componentDidMount() {
+    fetch("http://localhost:3000/api/v1/tasks")
+      .then(resp => resp.json())
+      .then(taskData =>
+        this.setState({
+          allTasks: taskData
         })
-        )
-        fetch('http://localhost:3000/api/v1/users')
-        .then(resp => resp.json())
-        .then(userData => this.setState({
-            allUsers: userData})
-        )
-        }
+      );
+    fetch("http://localhost:3000/api/v1/users")
+      .then(resp => resp.json())
+      .then(userData =>
+        this.setState({
+          allUsers: userData
+        })
+      );
+  }
 
-    renderRegister = (routerProps) => {
-        return <CreateUserForm
-        routerProps={routerProps} 
-        />
-    }
+  renderRegister = routerProps => {
+    return <CreateUserForm routerProps={routerProps} />;
+  };
 
-    renderLogin = (routerProps) => {
-        return <Login 
-        routerProps={routerProps} 
-        login={this.login} 
+  renderLogin = routerProps => {
+    return (
+      <Login
+        routerProps={routerProps}
+        login={this.login}
         showCreateUserForm={this.showCreateUserForm}
         newUserFormOpen={this.state.newUserFormOpen}
         filterUserTasks={this.filterUserTasks}
-        />
-        }
+      />
+    );
+  };
 
-    login = (enteredName) => {
-        let registeredUser = this.state.allUsers.find(user => user.username === enteredName.username)
-        return registeredUser?
-            this.setState({
-                currentUser: registeredUser
-            }): alert("You must first create an account.")
-        }
-
-    showTaskForm = () => {
-        this.setState({
-            newFormOpen: !this.state.newFormOpen
+  login = enteredName => {
+    let registeredUser = this.state.allUsers.find(
+      user => user.username === enteredName.username
+    );
+    return registeredUser
+      ? this.setState({
+          currentUser: registeredUser
         })
+      : alert("You must first create an account.");
+  };
+
+  showTaskForm = () => {
+    this.setState({
+      newFormOpen: !this.state.newFormOpen
+    });
+  };
+
+  addNewTask = newTaskObject => {
+    let newTasks = [...this.state.allTasks, newTaskObject];
+    console.log(newTaskObject.user_id === this.state.currentUser.id);
+    this.setState({
+      allTasks: newTasks
+      //   ,
+      //   usersPrioritizedTasks: [...this.state.usersPrioritizedTasks, newTaskObject]
+    });
+  };
+
+  showCreateUserForm = () => {
+    this.setState({
+      newUserFormOpen: !this.state.newUserFormOpen
+    });
+  };
+
+  deleteTask = taskObject => {
+    let updatedTasks = this.state.allTasks.filter(
+      task => task.id !== taskObject.id
+    );
+    let updatedUserTasks = this.state.usersPrioritizedTasks.filter(
+      task => task.id !== taskObject.id
+    );
+    this.setState({
+      allTasks: updatedTasks,
+      usersPrioritizedTasks: updatedUserTasks
+    });
+  };
+
+  prioritize = () => {
+    if (this.state.currentUser !== null) {
+      // if (this.state.prioritizedTasks !== [] && this.state.currentUser !== null) {
+      let onlyUserTasks = this.state.allTasks.filter(
+        task => task.user_id === this.state.currentUser.id
+      );
+      let firstSortedUserTasks = onlyUserTasks.sort((a, b) =>
+        a.importance > b.importance ? 1 : -1
+      );
+      let sortAllUser = firstSortedUserTasks.sort((a, b) =>
+        a.urgency > b.urgency ? 1 : -1
+      );
+      this.setState({
+        usersPrioritizedTasks: sortAllUser
+      });
     }
+  };
 
-    addNewTask = (newTaskObject) => {
-        let newTasks = [...this.state.allTasks, newTaskObject]
-        console.log(newTaskObject.user_id === this.state.currentUser.id)
-        this.setState({
-          allTasks: newTasks,
-          usersPrioritizedTasks: [...this.state.usersPrioritizedTasks, newTaskObject]
-        })
-      }
+  viewSavedPrioritized = () => {
+    this.state.usersPrioritizedTasks.map(
+      task =>
+        (task.priority_order =
+          this.state.usersPrioritizedTasks.indexOf(task) + 1)
+    );
+    this.setState({
+      haveSavedPrioritized: true
+    });
+  };
 
-    showCreateUserForm = () => {
-        this.setState({
-            newUserFormOpen: !this.state.newUserFormOpen
-        })
-    }
+  editCompleted = () => {
+    let userTasks = this.state.usersPrioritizedTasks.filter(
+      task => task.user_id === this.state.currentUser.id
+    );
+    let wip = userTasks.filter(task => task.category === "wip");
+    let complete = userTasks.filter(task => task.category === "complete");
+    this.setState({
+      wip: wip,
+      complete: complete
+    });
+  };
 
-    deleteTask = (taskObject) => {
-        let updatedTasks = this.state.allTasks.filter(task => task.id !== taskObject.id )
-        let updatedUserTasks = this.state.usersPrioritizedTasks.filter(task => task.id !== taskObject.id )
-        this.setState({
-            allTasks: updatedTasks,
-            usersPrioritizedTasks: updatedUserTasks
-        })
-    }
-
-    prioritize = () => {
-        if (this.state.currentUser !== null) {
-            // if (this.state.prioritizedTasks !== [] && this.state.currentUser !== null) {
-            let onlyUserTasks = this.state.allTasks.filter(task => task.user_id === this.state.currentUser.id)
-            let firstSortedUserTasks = onlyUserTasks.sort((a, b) => (a.importance > b.importance)? 1 : -1)
-            let sortAllUser = firstSortedUserTasks.sort((a, b) => (a.urgency > b.urgency)? 1 : -1)
-        this.setState({
-            usersPrioritizedTasks: sortAllUser
-        })
-     }
-    }
-
-    viewSavedPrioritized = () => {
-       this.state.usersPrioritizedTasks.map (task => task.priority_order = this.state.usersPrioritizedTasks.indexOf(task) + 1)
-        this.setState({
-            haveSavedPrioritized: true
-        })
-    }
-
-    editCompleted = () => {
-        let userTasks = this.state.usersPrioritizedTasks.filter(task => task.user_id === this.state.currentUser.id)
-        let wip = userTasks.filter(task => task.category === "wip")
-        let complete = userTasks.filter(task => task.category === "complete")
-        this.setState({
-            wip: wip,
-            complete: complete
-        })
-    }
-
-    persistOrdered = (task) => {  
-        fetch(`http://localhost:3000/api/v1/tasks/${task.id}`, { 
-        method: 'PATCH', 
-        headers: {
-          'content-type':'application/json',
-          'accept': 'application/json'
-        },
-        body: JSON.stringify({
-          priority_order: task.priority_order
-        })
-        })      
-      .then(response => response.json())
+  persistOrdered = task => {
+    fetch(`http://localhost:3000/api/v1/tasks/${task.id}`, {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+        accept: "application/json"
+      },
+      body: JSON.stringify({
+        priority_order: task.priority_order
+      })
+    }).then(response => response.json());
     //   .then(updatedTasks => console.log("here's what persisted:", updatedTasks))
-}
-      
-      updateStateFromDrop = (tasks) => {
-          console.log(tasks)
-          let wip = tasks.filter(task => task.category === "wip")
-          let complete = tasks.filter(task => task.category === "complete")
-          this.setState({
-              wip: wip,
-              complete: complete
-          })
-      }
+  };
 
-    render() {
-        console.log("wip:", this.state.wip)
-        console.log("complete:", this.state.complete)
-        return (
-            <div className="demo8-outer">
-                <div className="persist-saved-tasks">            
-                    {this.state.haveSavedPrioritized?
-                    this.state.usersPrioritizedTasks.map(task => this.persistOrdered(task)):null}
-                </div>
-                    <Switch />
-                    {!this.state.currentUser 
-                    // && !this.state.newUserFormOpen
-                    ?
-                    <Route path="/login" render={this.renderLogin} />:null}
-                    <Route path="/register" render={this.renderRegister}/>
-                    {this.state.currentUser?
-                    <Route path="/list" render={() => 
-                        <ViewList 
-                        key={ViewList.id}
-                        allTasks={this.state.allTasks}
-                        showTaskForm ={this.showTaskForm}
-                        newFormOpen={this.state.newFormOpen}
-                        addNewTask={this.addNewTask}
-                        currentUser={this.state.currentUser}
-                        userTasks={this.state.userTasks}
-                        prioritize={this.prioritize}
-                        deleteTask={this.deleteTask}
-                        usersPrioritizedTasks={this.state.usersPrioritizedTasks}
-                        viewSavedPrioritized={this.viewSavedPrioritized}
-                        updateStateFromDrop={this.updateStateFromDrop}
-                        editCompleted={this.editCompleted}
-                        wip={this.state.wip}
-                        complete={this.state.complete}
-                        />}/>:null}
-                        {/* else render login component?  */}
-                    <Route path="/pomodoro" render={() => 
-                        <Pomodoro
-                        defaultBreakLength='5' 
-                        defaultSessionLength='25'
-                        />}/>
-                    <Switch />
-            </div>
-        )
-    }
+  updateStateFromDrop = tasks => {
+    console.log(tasks);
+    let wip = tasks.filter(task => task.category === "wip");
+    let complete = tasks.filter(task => task.category === "complete");
+    this.setState({
+      wip: wip,
+      complete: complete
+    });
+  };
+
+  render() {
+    console.log("wip:", this.state.wip);
+    console.log("complete:", this.state.complete);
+    return (
+      <div className="demo8-outer">
+        {/* <div className="persist-saved-tasks">             */}
+        {this.state.haveSavedPrioritized
+          ? this.state.usersPrioritizedTasks.map(task =>
+              this.persistOrdered(task)
+            )
+          : null}
+        {/* </div> */}
+        <Switch />
+        {!this.state.currentUser ? (
+          // && !this.state.newUserFormOpen
+          <Route path="/login" render={this.renderLogin} />
+        ) : null}
+        <Route path="/register" render={this.renderRegister} />
+        {this.state.currentUser ? (
+          <Route
+            path="/list"
+            render={() => (
+              <ViewList
+                key={ViewList.id}
+                allTasks={this.state.allTasks}
+                showTaskForm={this.showTaskForm}
+                newFormOpen={this.state.newFormOpen}
+                addNewTask={this.addNewTask}
+                currentUser={this.state.currentUser}
+                userTasks={this.state.userTasks}
+                prioritize={this.prioritize}
+                deleteTask={this.deleteTask}
+                usersPrioritizedTasks={this.state.usersPrioritizedTasks}
+                viewSavedPrioritized={this.viewSavedPrioritized}
+                updateStateFromDrop={this.updateStateFromDrop}
+                editCompleted={this.editCompleted}
+                wip={this.state.wip}
+                complete={this.state.complete}
+              />
+            )}
+          />
+        ) : null}
+        {/* else render login component?  */}
+        <Route
+          path="/pomodoro"
+          render={() => (
+            <Pomodoro defaultBreakLength="5" defaultSessionLength="25" />
+          )}
+        />
+        <Switch />
+      </div>
+    );
+  }
 }
 
 

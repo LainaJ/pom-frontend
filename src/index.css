@@ -15,8 +15,8 @@ code {
 
 /* * {
   padding: auto;
-   /* margin: auto; */
-  /* -webkit-user-select: none;
+   margin: auto; 
+ -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
 } */
@@ -68,7 +68,6 @@ li {
   justify-content: center;
 }
 
-
 .demo8 {
   width: 320px;
   height: 400px;
@@ -81,12 +80,12 @@ li {
   /* transform-origin: 50% 50% 0px; */
   border-radius: 4px;
   color: rgb(124, 114, 114);
-
   font-size: 22px;
   font-weight: 400;
   background-color: rgb(255, 255, 255);
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
+  border-radius: 2%;
 } 
 
 .create-form{
@@ -108,6 +107,17 @@ li {
   background-color: #EEEEEE;
 }
 
+.droppable {
+  /* position: absolute; */
+  margin: auto;
+  float: right;
+  width: 40%;
+  height: 100vh;
+  right: 0;
+  top: 10;
+  background-color: #EEEEEE;
+}
+
  .header {
   color: white;
   display: inline-block;
@@ -122,16 +132,7 @@ li {
   background-color: #e6cdd6;
   width:100%;
   color: white;
-}
-
-.droppable {
-  /* position: absolute; */
-  float: right;
-  width: 40%;
-  height: 100vh;
-  right: 0;
-  top: 10;
-  background-color: rgb(240, 233, 233);
+  opacity: 50%;
 }
 
 .draggable {
@@ -154,6 +155,7 @@ li {
   position: relative;
   /* background-color: #0e9aa7; */
   padding: 0px 10px;
+  color: white;
 }
 
 .pomodoro-clock-header-name::before {
@@ -170,14 +172,19 @@ li {
 
 @media (min-width: 768px) {
   .pomodoro-clock {
-    width: 768px;
-    margin: 0 auto;
+    /* width: 768px; */
+    margin: 0 0;
   }
   .pomodoro-clock-header-name::before {
     top: 50%;
     left: -50%;
     width: 200%;
   }
+}
+
+.clock-background {
+  background-color: rgb(160, 172, 187);
+  width: 100%;
 }
 
 /* controller styles */
@@ -219,6 +226,7 @@ li {
   display: -webkit-flex;
   justify-content: space-around;
   margin-top: 25px;
+  color: white;
 }
 
 .settings-section {
@@ -292,6 +300,7 @@ li {
   justify-content: center;
   border: 5px solid #e2ccd4;
   border-radius: 50%;
+  color: white; 
 }
 
 #timer-label {
