@@ -17,11 +17,10 @@ class TaskListItem extends React.Component {
     this.props.deleteTask(task)
   }
 
-  defaultBreakLength
 
   render () {
     return (
-        <div className="task-item">
+        <div className="task-item" >
             <p>{this.props.task.description}</p>
             <p>Importance: {this.props.task.importance}</p>
             <p>Urgency: {this.props.task.urgency}</p>

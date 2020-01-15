@@ -31,7 +31,9 @@ import './index.css';
         importance: this.state.importance,
         urgency: this.state.urgency,
         predicted_pom: this.state.predicted_pom, 
-        user_id: this.props.currentUser.id
+        user_id: this.props.currentUser.id, 
+        category: "wip",
+        complete_status: false
       })
       })
     .then(response => response.json())
@@ -53,19 +55,21 @@ import './index.css';
       return (
         <div >
           <h1>Add a Task</h1>
-            <form className="create-form" onSubmit={this.handleSubmitForm}>
+            <form onSubmit={this.handleSubmitForm}>
               <label className="labels">Task: </label>
               <input type='text' name="description" placeholder="(e.g., Write blog post)"
               value={this.state.description} 
               onChange={ (e) => this.handleChange(e)}
               />
+              <br/>
               <label className="labels">Importance (1-5): </label>
               <input type='text' name="importance" placeholder="e.g., 5 - super important" 
               value={this.state.importance}
               onChange={ (e) => this.handleChange(e)}
               />
-              <label className="labels">Urgency (1-5): </label>
-              <input type='text' name="urgency" placeholder="e.g, 1 - can wait " 
+              <br/>
+              <label className="labels">Due Date: </label>
+              <input type='text' name="urgency" placeholder="e.g, 01-20-2020 " 
               value={this.state.urgency}
               onChange={ (e) => this.handleChange(e)}
               />

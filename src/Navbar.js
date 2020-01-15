@@ -27,9 +27,7 @@ class Navbar extends React.Component {
           <NavLink to="/register" exact style={link} activeStyle={{background: 'darkgrey'}}>Register</NavLink>
           <NavLink to="/list" exact style={link} activeStyle={{background: 'darkgrey'}}>List</NavLink> 
           <NavLink to="/pomodoro" exact style={link} activeStyle={{background: 'darkgrey'}}>Pomodoro</NavLink> 
-
-
-          <p className="app-title">POM</p>
+          {/* <p className="app-title">POM</p> */}
         </div>
         );
     }

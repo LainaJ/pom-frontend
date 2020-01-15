@@ -13,19 +13,19 @@ code {
     monospace;
 }
 
-* {
+/* * {
   padding: auto;
    /* margin: auto; */
-  -webkit-user-select: none;
+  /* -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
-}
+} */
 
-.demo8-outer {
-  background-color: #EEE;
-  color: #FFF;
+  /* .demo8-outer { */
+  /* background-color: #EEE; */
+  /* color: #FFF; */
   /* position: absolute; */
-  width: 100%;
+  /* width: 100%;
   height: 100%;
   margin-top: auto;
   font: 28px/1em "Helvetica";
@@ -35,7 +35,7 @@ code {
   display: -webkit-flex;
   -webkit-justify-content: center;
   -webkit-align-items: center;
-}
+/* }   */
 
 .nav {
   background-color: #fff;
@@ -60,13 +60,14 @@ ul{
   padding-top: 40px;
   align-content: center;
   justify-content: center;
-  list-style: none
-}
+  list-style: none;
+} 
 
 li {
   align-content: center;
   justify-content: center;
 }
+
 
 .demo8 {
   width: 320px;
@@ -74,19 +75,73 @@ li {
 }
 
 .task-item {
-  width: 520px;
-  overflow: visible;
-  pointer-events: auto;
-  transform-origin: 50% 50% 0px;
+  width: 80%;
+  /* overflow: visible; */
+  /* pointer-events: auto; */
+  /* transform-origin: 50% 50% 0px; */
   border-radius: 4px;
   color: rgb(124, 114, 114);
-  padding: auto;
+
   font-size: 22px;
   font-weight: 400;
   background-color: rgb(255, 255, 255);
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
+} 
+
+.create-form{
+  width: 100%;
 }
+
+/* draggable features */
+
+.container-drag {
+  text-align: center;
+}
+
+.wip {
+  /* position: absolute; */
+  margin: auto;
+  float: left;
+  width: 40%;
+  height: 100vh;
+  background-color: #EEEEEE;
+}
+
+ .header {
+  color: white;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  /* background-color: #E0E0E0; */
+  /* width:100%; */
+} 
+
+.task-header {
+  display: inline-block;
+  background-color: #e6cdd6;
+  width:100%;
+  color: white;
+}
+
+.droppable {
+  /* position: absolute; */
+  float: right;
+  width: 40%;
+  height: 100vh;
+  right: 0;
+  top: 10;
+  background-color: rgb(240, 233, 233);
+}
+
+.draggable {
+  /* width: 100px;
+  height: 100px; */
+  background-color: rgb(240, 240, 198);
+  border-radius: 4px 4px ;
+  align-content: center;
+}
+/* end draggable */
 
 .pomodoro-clock-header {
   text-align: center;
