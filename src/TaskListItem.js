@@ -19,7 +19,7 @@ class TaskListItem extends React.Component {
       <div className="task-item">
         <p>{this.props.task.description}</p>
         <p>Importance: {this.props.task.importance}</p>
-        <p>Urgency: {this.props.task.urgency}</p>
+        <p>Due: {this.props.task.urgency}</p>
         <button onClick={e => null}>Edit Task</button>
         <button onClick={e => this.handleDeleteTask(e, this.props.task)}>
           X

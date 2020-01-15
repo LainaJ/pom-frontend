@@ -73,13 +73,14 @@ class Main extends React.Component {
     });
   };
 
+
+//the second line of this is sometimes the difference between bugginess//look into otherwise
   addNewTask = newTaskObject => {
     let newTasks = [...this.state.allTasks, newTaskObject];
-    console.log(newTaskObject.user_id === this.state.currentUser.id);
     this.setState({
       allTasks: newTasks
-      //   ,
-      //   usersPrioritizedTasks: [...this.state.usersPrioritizedTasks, newTaskObject]
+        ,
+        usersPrioritizedTasks: [...this.state.usersPrioritizedTasks, newTaskObject]
     });
   };
 

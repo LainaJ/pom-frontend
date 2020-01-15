@@ -8,40 +8,37 @@ import CreateTaskForm from './CreateTaskForm'
 
 class ViewList extends React.Component {
   onDragStart = (ev, task) => {
-    console.log("dragstart:", task);
+    // console.log("dragstart:", task);
     ev.dataTransfer.setData("id", task.id);
   };
 
   onDragOver = ev => {
     ev.preventDefault();
-    console.log("dragover:");
+    // console.log("dragover:");
   };
 
   onDrop = (ev, category) => {
-    console.log("onDrop:");
+    // console.log("onDrop:");
     let id = ev.dataTransfer.getData("id");
     // console.log(this.props.usersPrioritizedTasks)
-    console.log(id);
     let tasks = this.props.usersPrioritizedTasks.filter(task => {
-      console.log(task);
       let newId = parseInt(id);
       if (task.id === newId) {
-        console.log(task);
-        console.log(id);
+        // console.log(task);
+        // console.log(id);
         task.category = category;
       }
       return task;
     });
-
     // this.setState({
     //     ...this.state,
     //     tasks
     // });
-
     this.props.updateStateFromDrop(tasks);
   };
 
   renderTasks = () => {
+    console.log("renderingTasks once logged in")
     if (this.props.currentUser !== null) {
       let onlyUserTasks = this.props.allTasks.filter(
         task => task.user_id === this.props.currentUser.id
@@ -66,7 +63,11 @@ class ViewList extends React.Component {
 
   renderSaved = () => {
     console.log("renderSaved:", this.props.usersPrioritizedTasks);
-    return this.props.usersPrioritizedTasks.map(task => (
+    console.log("completed tasks during renderSaved:", this.props.complete);
+    console.log("completed tasks during renderSaved:", this.props.complete);
+    let wip = this.props.usersPrioritizedTasks.filter(task => task.category === "wip")
+    console.log("wip at renderSaved:", wip)
+    return wip.map(task => (
       <div
         key={task.id}
         onDragStart={e => this.onDragStart(e, task)}
@@ -85,7 +86,7 @@ class ViewList extends React.Component {
 
   renderComplete = () => {
     let completed = this.props.complete;
-    console.log("completed:", completed);
+    console.log("renderCompleted:", completed);
     return completed.map(task => (
       <div
         key={task.id}
@@ -117,11 +118,10 @@ class ViewList extends React.Component {
             <span className="task-header">
               {this.props.currentUser.username}'s To-Dos
             </span>
-            {/* {this.props.wip}  */}
-            {this.props.usersPrioritizedTasks.length > 0
+            {this.props.usersPrioritizedTasks.length > 0 &&
+            this.props.wip !== []
               ? this.renderSaved()
               : this.renderTasks()}
-
             {this.props.currentUser !== null ? (
               <button onClick={() => this.props.showTaskForm()}>
                 Add Task

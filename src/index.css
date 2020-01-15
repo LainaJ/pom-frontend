@@ -77,7 +77,7 @@ li {
   width: 80%;
   /* overflow: visible; */
   /* pointer-events: auto; */
-  /* transform-origin: 50% 50% 0px; */
+  transform-origin: 50% 50% 0px;
   border-radius: 4px;
   color: rgb(124, 114, 114);
   font-size: 22px;
@@ -86,6 +86,7 @@ li {
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   border-radius: 2%;
+  line-height: 20px;
 } 
 
 .create-form{
@@ -103,7 +104,7 @@ li {
   margin: auto;
   float: left;
   width: 40%;
-  height: 100vh;
+  height: auto;
   background-color: #EEEEEE;
 }
 
@@ -112,7 +113,7 @@ li {
   margin: auto;
   float: right;
   width: 40%;
-  height: 100vh;
+  height: 150vh;
   right: 0;
   top: 10;
   background-color: #EEEEEE;
