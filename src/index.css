@@ -13,13 +13,13 @@ code {
     monospace;
 }
 
-/* * {
-  padding: auto;
-   margin: auto; 
+ * {
+  /* padding: auto;
+   margin: auto;  */
  -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
-} */
+}
 
   /* .demo8-outer { */
   /* background-color: #EEE; */
@@ -74,19 +74,24 @@ li {
 }
 
 .task-item {
-  width: 80%;
+  width: 95%;
   /* overflow: visible; */
   /* pointer-events: auto; */
   transform-origin: 50% 50% 0px;
-  border-radius: 4px;
   color: rgb(124, 114, 114);
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 400;
   background-color: rgb(255, 255, 255);
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  border-radius: 2%;
+  border-radius: 6px;
   line-height: 20px;
+  white-space: pre;
+  word-break: break-word;
+  padding: .01em; 
+  margin: auto;
+  display: block;
+
 } 
 
 .create-form{
@@ -106,6 +111,7 @@ li {
   width: 40%;
   height: auto;
   background-color: #EEEEEE;
+  border-radius: 4px;
 }
 
 .droppable {
@@ -117,6 +123,7 @@ li {
   right: 0;
   top: 10;
   background-color: #EEEEEE;
+  border-radius: 4px;
 }
 
  .header {
@@ -134,14 +141,19 @@ li {
   width:100%;
   color: white;
   opacity: 50%;
+  font-size: 20px;
+  font-weight: 400;
+  border-radius: 6px;
+  height: 25px;
 }
 
 .draggable {
   /* width: 100px;
   height: 100px; */
-  background-color: rgb(240, 240, 198);
-  border-radius: 4px 4px ;
+  background-color: rgb(220, 225, 238);
+  border-radius: 4px;
   align-content: center;
+  margin: 10px;
 }
 /* end draggable */
 

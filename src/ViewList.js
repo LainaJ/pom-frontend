@@ -5,7 +5,6 @@ import CreateTaskForm from './CreateTaskForm'
 // import {Motion, spring} from 'react-motion';
 // import { range } from 'lodash';
 
-
 class ViewList extends React.Component {
   onDragStart = (ev, task) => {
     // console.log("dragstart:", task);
