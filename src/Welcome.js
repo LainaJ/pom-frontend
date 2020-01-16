@@ -5,12 +5,11 @@ class Welcome extends Component {
 
   render() {
     return (
-      <div>
+      <div className="welcome-div">
           <h1 id="welcome-header">Welcome to Pom</h1>
-
           {this.props.currentUser !== null?
-          <p id="welcome-logged in">You are currently logged in as {this.props.currentUser.username}.</p>:
-            <p id="welcome-logged in">You are not currently logged in. Login or Create an Account!</p>} 
+          <p className="welcome-logged-in">You are currently logged in as <b>{this.props.currentUser.username}</b>.</p>:
+          <p className="welcome-logged-in">You are not currently logged in. Login or Create an Account!</p>} 
       </div>
     )
   }

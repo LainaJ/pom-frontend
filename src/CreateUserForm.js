@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from 'react-dom';
 import "./index.css";
 
 class CreateUserForm extends React.Component {
@@ -63,7 +64,7 @@ class CreateUserForm extends React.Component {
           />
           <label className="labels">Password: </label>
           <input
-            type="text"
+            type="password"
             name="password"
             value={this.state.password}
             onChange={e => this.handleChange(e)}

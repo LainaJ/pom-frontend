@@ -1,19 +1,32 @@
 import React from 'react';
 import TaskListItem from './TaskListItem';
-import './index.css';
+// import './index.css';
 import CreateTaskForm from './CreateTaskForm'
+import ReactDOM from 'react-dom';
+import Button from '@material-ui/core/Button';
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 // import {Motion, spring} from 'react-motion';
 // import { range } from 'lodash';
 
+
 class ViewList extends React.Component {
+
+
+  state = {
+    dense: false,
+  }
+
   onDragStart = (ev, task) => {
-    // console.log("dragstart:", task);
     ev.dataTransfer.setData("id", task.id);
   };
 
   onDragOver = ev => {
     ev.preventDefault();
-    // console.log("dragover:");
   };
 
   onDrop = (ev, category) => {
@@ -39,18 +52,13 @@ class ViewList extends React.Component {
           category: task.category
         })
       }).then(response => response.json())
-        .then(updatedTasks => console.log("let's see if category of completed persisted:", updatedTasks))
     )
 
   }//end onDrop
 
   renderTasks = () => {
-    console.log("renderingTasks: it shouldn't get here after I'm logged in")
-    if (this.props.currentUser !== null && this.props.havePrioritized !== true) {
-      let onlyUserTasks = this.props.allTasks.filter(
-        task => task.user_id === this.props.currentUser.id
-      );
-      return onlyUserTasks.map(task => (
+    if (this.props.currentUser !== null) {
+      return this.props.userTasks.map(task => (
         <div
           key={task.id}
           onDragStart={e => this.onDragStart(e, task)}
@@ -67,9 +75,6 @@ class ViewList extends React.Component {
       ))
     }
     else if (this.props.currentUser !== null && this.props.havePrioritized === true) {
-      // let onlyUserTasks = this.props.allTasks.filter(
-      //   task => task.user_id === this.props.currentUser.id
-      // );
       return this.props.usersPrioritizedTasks.map(task => (
         <div
           key={task.id}
@@ -85,15 +90,11 @@ class ViewList extends React.Component {
           />
         </div>
       ))
-
-
-
     }
   }
 
   renderTodos = () => {
     let wip = this.props.userTasks.filter(task => task.category === "wip")
-    console.log("wip at renderTodos:", wip)
     return wip.map(task => (
       <div
         key={task.id}
@@ -113,7 +114,6 @@ class ViewList extends React.Component {
 
   renderComplete = () => {
     let completed = this.props.userTasks.filter(task => task.category === "complete")
-    console.log(" completed at renderComplete:", completed);
     return completed.map(task => (
       <div
         key={task.id}
@@ -142,12 +142,13 @@ class ViewList extends React.Component {
               this.onDrop(e, "wip");
             }}
           >
+
             <span className="task-header">
               {this.props.currentUser.username}'s To-Dos
             </span>
-            {this.props.userTasks.length > 0?
-             this.renderTodos()
-              :this.renderTasks()}
+            {this.props.userTasks.length > 0
+              ? this.renderTodos()
+              : this.renderTasks()}
             {this.props.currentUser !== null ? (
               <button onClick={() => this.props.showTaskForm()}>
                 Add Task
@@ -176,8 +177,7 @@ class ViewList extends React.Component {
             onDrop={e => this.onDrop(e, "complete")}
           >
             <span className="task-header">COMPLETED</span>
-            {this.props.userTasks.length > 0 &&
-            this.props.complete !== []
+            {this.props.userTasks.length > 0 && this.props.complete !== []
               ? this.renderComplete()
               : null}
           </div>
@@ -194,7 +194,6 @@ class ViewList extends React.Component {
     );
   }
 }
-
 
 
 export default ViewList;

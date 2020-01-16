@@ -1,22 +1,44 @@
 import React from 'react'
+import ReactDOM from 'react-dom';
 import './index.css';
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  DatePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
+import TextField from '@material-ui/core/TextField';
+import { timePickerDefaultProps } from '@material-ui/pickers/constants/prop-types';
+import dateFormat from 'dateformat';
+
 
   class CreateTaskForm extends React.Component {
+    
     state = {
       description: "",
       importance: 0,
       urgency: 0,
       predicted_pom: 0
-    };
+    }
 
     handleChange = e => {
       this.setState({
         [e.target.name]: e.target.value
-      });
-    };
+      })
+    }
 
-    handleSubmitForm = e => {
+    handleDateChange = (date) => {
+      console.log(dateFormat(date, "mm/dd/yyyy"))
+      this.setState({
+        urgency: dateFormat(date, "mm/dd/yyyy")
+      })
+    }
+
+    handleSubmitForm = (e, task) => {
       e.preventDefault();
+      console.log(task)
+   
       if (this.props.currentUser !== null) {
         fetch("http://localhost:3000/api/v1/tasks", {
           method: "POST",
@@ -72,14 +94,12 @@ import './index.css';
               onChange={e => this.handleChange(e)}
             />
             <br />
-            <label className="labels">Due Date: </label>
             <input
-              type="text"
+              type="hidden"
               name="urgency"
-              placeholder="e.g, 01-20-2020 "
               value={this.state.urgency}
-              onChange={e => this.handleChange(e)}
-            />
+              // onChange={e => this.handleChange(e)}
+            /> 
             <label className="labels">Predicted Pomodoros: </label>
             <input
               type="text"
@@ -88,6 +108,32 @@ import './index.css';
               value={this.state.image}
               onChange={e => this.handleChange(e)}
             />
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardDatePicker
+                margin="normal"
+                id="date-picker-dialog"
+                label="Task Due Date"
+                name="urgency"
+                value={this.state.urgency}
+                onChange={(e) => this.handleDateChange(e)}
+              />
+            </MuiPickersUtilsProvider>
+
+            {/* <TextField
+              id="date"
+              label="Due Date"
+              type="date"
+              name="urgency"
+              onChange={e => this.handleChange(e)}
+              value={this.state.urgency}
+              defaultValue="01-23-2020"
+              format={'DD/MM/YYYY'}
+              // className={textField}
+              InputLabelProps={{
+                shrink: true
+              }}
+            /> */}
+
             <br />
             <input type="submit" value="Save Task" />
           </form>
