@@ -2,22 +2,27 @@ import React from 'react';
 import TaskListItem from './TaskListItem';
 import './index.css';
 import CreateTaskForm from './CreateTaskForm'
-import ReactDOM from 'react-dom';
-import Button from '@material-ui/core/Button';
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import { makeStyles } from '@material-ui/core/styles';
-
-// import {Motion, spring} from 'react-motion';
+// import Button from '@material-ui/core/Button';
+// import DateFnsUtils from '@date-io/date-fns';
+// import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+// import List from '@material-ui/core/List';
+// import ListItem from '@material-ui/core/ListItem';
+// import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+// import ListItemIcon from '@material-ui/core/ListItemIcon';
+// import { makeStyles } from '@material-ui/core/styles';
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 // import { range } from 'lodash';
+// import clamp from 'lodash-es/clamp'
+// import swap from 'lodash-move'
+// import { useGesture } from 'react-use-gesture'
+import { Spring } from 'react-motion';
+// import {TransitionMotion, spring, presets} from 'react-motion'; own thing with spme using react router
+import IconButton from '@material-ui/core/IconButton';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 
 class ViewList extends React.Component {
-
 
   state = {
     dense: false,
@@ -33,7 +38,6 @@ class ViewList extends React.Component {
 
   onDrop = (ev, category) => {
     let id = ev.dataTransfer.getData("id");
-    // console.log(this.props.usersPrioritizedTasks)
     let tasks = this.props.userTasks.filter(task => {
       let newId = parseInt(id);
       if (task.id === newId) {
@@ -55,44 +59,25 @@ class ViewList extends React.Component {
         })
       }).then(response => response.json())
     )
-
   }//end onDrop
 
-  renderTasks = () => {
-    if (this.props.currentUser !== null) {
-      return this.props.userTasks.map(task => (
-        <div
-          key={task.id}
-          onDragStart={e => this.onDragStart(e, task)}
-          draggable="true"
-          className="draggable"
-          task={task}
-        >
-          <TaskListItem
-            key={task.id}
-            task={task}
-            deleteTask={this.props.deleteTask}
-          />
-        </div>
-      ))
-    }
-    else if (this.props.currentUser !== null && this.props.havePrioritized === true) {
-      return this.props.usersPrioritizedTasks.map(task => (
-        <div
-          key={task.id}
-          onDragStart={e => this.onDragStart(e, task)}
-          draggable="true"
-          className="draggable"
-          task={task}
-        >
-          <TaskListItem
-            key={task.id}
-            task={task}
-            deleteTask={this.props.deleteTask}
-          />
-        </div>
-      ))
-    }
+  renderPrioritized = () => {
+    let wipPrioritized = this.props.usersPrioritizedTasks.filter(task => task.category === "wip")
+          return wipPrioritized.map(task => (
+            <div
+              key={task.id}
+              onDragStart={e => this.onDragStart(e, task)}
+              draggable="true"
+              className="draggable"
+              task={task}
+            >
+              <TaskListItem
+                key={task.id}
+                task={task}
+                deleteTask={this.props.deleteTask}
+              />
+            </div>
+          ))
   }
 
   renderTodos = () => {
@@ -135,9 +120,9 @@ class ViewList extends React.Component {
   };
 
   render() {
-
     return (
       <div className="main">
+      <Spring defaultValue={0} endValue={120}>
         <div className="container-drag">
           <div
             className="wip"
@@ -146,33 +131,26 @@ class ViewList extends React.Component {
               this.onDrop(e, "wip");
             }}
           >
+   
             <span className="task-header">
               {this.props.currentUser.username}'s To-Dos
             </span>
-            {this.props.userTasks.length > 0
+            {this.props.havePrioritized === false
               ? this.renderTodos()
-              : this.renderTasks()}
+              : this.renderPrioritized()}
             {this.props.currentUser !== null ? (
-              <button onClick={() => this.props.showTaskForm()}>
-                Add Task
-              </button>
-            ) : null}
-            {this.props.currentUser !== null ? (
-              <button onClick={() => this.props.prioritize()}>
-                Prioritize
-              </button>
-            ) : null}
-            {/* {this.props.currentUser !== null &&
-            this.props.savePrioritized !== null ? (
-              <button onClick={() => this.props.viewSavedPrioritized()}>
-                Save Prioritized
-              </button>
-            ) : null}
-            {this.props.currentUser !== null ? (
-              <button onClick={() => this.props.editCompleted()}>
-                Edit Completed
-              </button>
-            ) : null} */}
+              <IconButton edge="end">
+                <AddCircleOutlineIcon
+                  onClick={() => this.props.showTaskForm()}/>
+              </IconButton>
+            ): null} 
+               <FormControlLabel
+               value="Prioritize"
+               control={<Switch color="secondary" onChange={() => this.props.prioritize()} />}
+               label="Prioritize"
+               labelPlacement="start"
+             />  
+
           </div>
           <div
             className="droppable"
@@ -185,6 +163,10 @@ class ViewList extends React.Component {
               : null}
           </div>
         </div>
+        {/* end container drag */}
+        </Spring>
+
+
         <div className="create-form">
           {this.props.newFormOpen ? (
             <CreateTaskForm

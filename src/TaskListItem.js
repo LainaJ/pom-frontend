@@ -2,6 +2,8 @@ import React from "react";
 import "./index.css";
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+
 
 class TaskListItem extends React.Component {
   handleDeleteTask = (e, task) => {
@@ -22,9 +24,14 @@ class TaskListItem extends React.Component {
         <p>{this.props.task.description}</p>
         <p>Importance: {this.props.task.importance}</p>
         <p>Due: {this.props.task.urgency}</p>
-        <button onClick={e => null}>Edit Task</button>
+        {/* {this.props.currentUser !== null ? (
+          <IconButton edge="end">
+            <EditIcon onClick={() => null} />
+          </IconButton>
+        ) : null} */}
         <IconButton edge="end" aria-label="delete">
-          <DeleteIcon onClick={e => this.handleDeleteTask(e, this.props.task)} />
+          <DeleteIcon
+            onClick={e => this.handleDeleteTask(e, this.props.task)}/>
         </IconButton>
       </div>
     );

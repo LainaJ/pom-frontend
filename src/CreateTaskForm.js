@@ -76,6 +76,7 @@ import dateFormat from 'dateformat';
           <form onSubmit={this.handleSubmitForm}>
             <label className="labels">Task: </label>
             <input
+              className="new-todo"
               type="text"
               name="description"
               placeholder="(e.g., Write blog post)"

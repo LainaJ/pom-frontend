@@ -6,11 +6,14 @@ import CreateUserForm from './CreateUserForm';
 import Pomodoro from './Pomodoro'
 import Welcome from './Welcome'
 // import { update } from 'lodash-es';
-import ReactDOM from 'react-dom';
-import Button from '@material-ui/core/Button';
+// import ReactDOM from 'react-dom';
+// import Button from '@material-ui/core/Button';
 import { Route, Switch } from 'react-router-dom';
 import 'typeface-roboto';
-
+// import {TransitionMotion, spring, presets} from 'react-motion';
+// import clamp from 'lodash-es/clamp'
+// import swap from 'lodash-move'
+// import { useGesture } from 'react-use-gesture'
 
 
 class Main extends React.Component {
@@ -71,7 +74,7 @@ class Main extends React.Component {
     return registeredUser
       ? this.setState({
           currentUser: registeredUser,
-          userTasks: this.state.allTasks.filter(task => task.user_id === registeredUser.id )
+          userTasks: this.state.allTasks.filter(task => task.user_id === registeredUser.id)
         })
       : alert("You must first create an account.");
   };
@@ -132,7 +135,8 @@ class Main extends React.Component {
 
   prioritize = () => {
     if (this.state.currentUser !== null) {
-      let firstSortedUserTasks = this.state.userTasks.sort((a, b) =>
+      let userTasksCopy = [...this.state.userTasks]
+      let firstSortedUserTasks = userTasksCopy.sort((a, b) =>
         a.importance > b.importance ? 1 : -1
       )
       let sortAllUser = firstSortedUserTasks.sort((a, b) =>
@@ -145,28 +149,28 @@ class Main extends React.Component {
     }
   };
 
-  viewSavedPrioritized = () => {
-    this.state.usersPrioritizedTasks.map(
-      task =>
-        (task.priority_order =
-          this.state.usersPrioritizedTasks.indexOf(task) + 1)
-    )
-    this.setState({
-      haveSavedPrioritized: true
-    })
-  };
+  // viewSavedPrioritized = () => {
+  //   this.state.usersPrioritizedTasks.map(
+  //     task =>
+  //       (task.priority_order =
+  //         this.state.usersPrioritizedTasks.indexOf(task) + 1)
+  //   )
+  //   this.setState({
+  //     haveSavedPrioritized: true
+  //   })
+  // };
 
-  editCompleted = () => {
-    let userTasks = this.state.usersPrioritizedTasks.filter(
-      task => task.user_id === this.state.currentUser.id
-    );
-    let wip = userTasks.filter(task => task.category === "wip");
-    let complete = userTasks.filter(task => task.category === "complete");
-    this.setState({
-      wip: wip,
-      complete: complete
-    });
-  };
+  // editCompleted = () => {
+  //   let userTasks = this.state.usersPrioritizedTasks.filter(
+  //     task => task.user_id === this.state.currentUser.id
+  //   );
+  //   let wip = userTasks.filter(task => task.category === "wip");
+  //   let complete = userTasks.filter(task => task.category === "complete");
+  //   this.setState({
+  //     wip: wip,
+  //     complete: complete
+  //   });
+  // };
 
   persistOrdered = task => {
     fetch(`http://localhost:3000/api/v1/tasks/${task.id}`, {
@@ -183,7 +187,6 @@ class Main extends React.Component {
   };
 
   updateStateFromDrop = tasks => {
-    console.log(tasks);
     let wip = tasks.filter(task => task.category === "wip");
     let complete = tasks.filter(task => task.category === "complete");
     this.setState({
@@ -193,9 +196,6 @@ class Main extends React.Component {
   };
 
   render() {
-    console.log(this.state.userTasks)
-    console.log("wip:", this.state.wip);
-    console.log("complete:", this.state.complete);
     return (
       <div className="demo8-outer">
         {/* <div className="persist-saved-tasks">             */}
@@ -225,7 +225,7 @@ class Main extends React.Component {
                 prioritize={this.prioritize}
                 deleteTask={this.deleteTask}
                 usersPrioritizedTasks={this.state.usersPrioritizedTasks}
-                viewSavedPrioritized={this.viewSavedPrioritized}
+                // viewSavedPrioritized={this.viewSavedPrioritized}
                 updateStateFromDrop={this.updateStateFromDrop}
                 editCompleted={this.editCompleted}
                 wip={this.state.wip}
@@ -234,7 +234,7 @@ class Main extends React.Component {
               />
             )}
           />
-        ) : null}
+        ): null}
         <Route path="/welcome" render={this.renderWelcome} />
         <Route path="/pomodoro"
           render={() => (

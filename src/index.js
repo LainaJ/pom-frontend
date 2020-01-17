@@ -11,7 +11,6 @@ import 'typeface-roboto';
 
 
 // import { Route, Switch } from 'react-router-dom';
-
 ReactDOM.render(
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
     <Router>
