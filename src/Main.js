@@ -9,6 +9,8 @@ import Welcome from './Welcome'
 import ReactDOM from 'react-dom';
 import Button from '@material-ui/core/Button';
 import { Route, Switch } from 'react-router-dom';
+import 'typeface-roboto';
+
 
 
 class Main extends React.Component {
@@ -81,12 +83,7 @@ class Main extends React.Component {
         currentUser={this.state.currentUser}
         userTasks={this.state.userTasks}
         routerProps={routerProps}
-        // prioritize={this.prioritize}
-        // deleteTask={this.deleteTask}
         usersPrioritizedTasks={this.state.usersPrioritizedTasks}
-        // viewSavedPrioritized={this.viewSavedPrioritized}
-        // updateStateFromDrop={this.updateStateFromDrop}
-        // editCompleted={this.editCompleted}
         wip={this.state.wip}
         complete={this.state.complete}
       />
@@ -137,14 +134,14 @@ class Main extends React.Component {
     if (this.state.currentUser !== null) {
       let firstSortedUserTasks = this.state.userTasks.sort((a, b) =>
         a.importance > b.importance ? 1 : -1
-      );
+      )
       let sortAllUser = firstSortedUserTasks.sort((a, b) =>
         a.urgency > b.urgency ? 1 : -1
-      );
+      )
       this.setState({
         usersPrioritizedTasks: sortAllUser, 
         havePrioritized: !this.state.havePrioritized
-      });
+      })
     }
   };
 
@@ -153,10 +150,10 @@ class Main extends React.Component {
       task =>
         (task.priority_order =
           this.state.usersPrioritizedTasks.indexOf(task) + 1)
-    );
+    )
     this.setState({
       haveSavedPrioritized: true
-    });
+    })
   };
 
   editCompleted = () => {

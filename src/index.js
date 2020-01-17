@@ -7,6 +7,8 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import 'typeface-roboto';
+
 
 // import { Route, Switch } from 'react-router-dom';
 

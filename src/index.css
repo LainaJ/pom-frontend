@@ -1,12 +1,13 @@
 body {
   /* margin: 0; */
   padding-top: 60px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 
+  /* -apple-system, BlinkMacSystemFont, */
+   'Roboto';
+  /* -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; */
 }
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -16,9 +17,9 @@ code {
  * {
   /* padding: auto;
    margin: auto;  */
- -webkit-user-select: none;
+ /* -webkit-user-select: none;
   -moz-user-select: none;
-  user-select: none;
+  user-select: none; */
 }
 
   /* .demo8-outer { */
@@ -46,8 +47,8 @@ code {
   width: 100%;
   float: left;
   z-index: 9;
-  font-weight: bolder;
   padding-left: 3px;
+  text-transform: uppercase;
   text-align: left;
 }
 
@@ -91,7 +92,6 @@ li {
   padding: .01em; 
   margin: auto;
   display: block;
-
 } 
 
 .create-form{
@@ -107,8 +107,9 @@ li {
 .wip {
   /* position: absolute; */
   margin: auto;
+  margin-left: 8%;
   float: left;
-  width: 40%;
+  width: 40%; 
   height: auto;
   background-color: #EEEEEE;
   border-radius: 4px;
@@ -117,11 +118,12 @@ li {
 .droppable {
   /* position: absolute; */
   margin: auto;
+  margin-right: 8%;
   float: right;
   width: 40%;
   height: 150vh;
   right: 0;
-  top: 10;
+  /* top: 10; */
   background-color: #EEEEEE;
   border-radius: 4px;
 }
@@ -150,7 +152,7 @@ li {
 .draggable {
   /* width: 100px;
   height: 100px; */
-  background-color: rgb(220, 225, 238);
+  /* background-color: rgb(220, 225, 238); */
   border-radius: 4px;
   align-content: center;
   margin: 10px;

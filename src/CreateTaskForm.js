@@ -29,7 +29,6 @@ import dateFormat from 'dateformat';
     }
 
     handleDateChange = (date) => {
-      console.log(dateFormat(date, "mm/dd/yyyy"))
       this.setState({
         urgency: dateFormat(date, "mm/dd/yyyy")
       })
@@ -37,7 +36,6 @@ import dateFormat from 'dateformat';
 
     handleSubmitForm = (e, task) => {
       e.preventDefault();
-      console.log(task)
    
       if (this.props.currentUser !== null) {
         fetch("http://localhost:3000/api/v1/tasks", {
@@ -58,7 +56,7 @@ import dateFormat from 'dateformat';
         })
           .then(response => response.json())
           .then(newTask => this.props.addNewTask(newTask));
-        // this renders it to the screen:
+        // this renders to screen:
         // this.props.addNewTask({
         //   description: this.state.description,
         //   importance: this.state.importance,
@@ -108,6 +106,7 @@ import dateFormat from 'dateformat';
               value={this.state.image}
               onChange={e => this.handleChange(e)}
             />
+            <br />
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <KeyboardDatePicker
                 margin="normal"
@@ -118,22 +117,6 @@ import dateFormat from 'dateformat';
                 onChange={(e) => this.handleDateChange(e)}
               />
             </MuiPickersUtilsProvider>
-
-            {/* <TextField
-              id="date"
-              label="Due Date"
-              type="date"
-              name="urgency"
-              onChange={e => this.handleChange(e)}
-              value={this.state.urgency}
-              defaultValue="01-23-2020"
-              format={'DD/MM/YYYY'}
-              // className={textField}
-              InputLabelProps={{
-                shrink: true
-              }}
-            /> */}
-
             <br />
             <input type="submit" value="Save Task" />
           </form>

@@ -1,6 +1,6 @@
 import React from 'react';
 import TaskListItem from './TaskListItem';
-// import './index.css';
+import './index.css';
 import CreateTaskForm from './CreateTaskForm'
 import ReactDOM from 'react-dom';
 import Button from '@material-ui/core/Button';
@@ -10,6 +10,8 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import { makeStyles } from '@material-ui/core/styles';
+
 // import {Motion, spring} from 'react-motion';
 // import { range } from 'lodash';
 
@@ -103,6 +105,7 @@ class ViewList extends React.Component {
         className="draggable"
         task={task}
       >
+     
         <TaskListItem
           key={task.id}
           task={task}
@@ -132,6 +135,7 @@ class ViewList extends React.Component {
   };
 
   render() {
+
     return (
       <div className="main">
         <div className="container-drag">
@@ -142,7 +146,6 @@ class ViewList extends React.Component {
               this.onDrop(e, "wip");
             }}
           >
-
             <span className="task-header">
               {this.props.currentUser.username}'s To-Dos
             </span>
@@ -159,7 +162,7 @@ class ViewList extends React.Component {
                 Prioritize
               </button>
             ) : null}
-            {this.props.currentUser !== null &&
+            {/* {this.props.currentUser !== null &&
             this.props.savePrioritized !== null ? (
               <button onClick={() => this.props.viewSavedPrioritized()}>
                 Save Prioritized
@@ -169,7 +172,7 @@ class ViewList extends React.Component {
               <button onClick={() => this.props.editCompleted()}>
                 Edit Completed
               </button>
-            ) : null}
+            ) : null} */}
           </div>
           <div
             className="droppable"
