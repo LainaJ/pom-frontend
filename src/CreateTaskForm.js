@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom';
 import './index.css';
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
@@ -8,8 +7,6 @@ import {
   DatePicker,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
-import TextField from '@material-ui/core/TextField';
-import { timePickerDefaultProps } from '@material-ui/pickers/constants/prop-types';
 import dateFormat from 'dateformat';
 
 

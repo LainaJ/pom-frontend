@@ -172,6 +172,40 @@ class Main extends React.Component {
   //   });
   // };
 
+  renderViewList = (routerProps) => {
+    return (
+      <ViewList
+        key={ViewList.id}
+        allTasks={this.state.allTasks}
+        showTaskForm={this.showTaskForm}
+        newFormOpen={this.state.newFormOpen}
+        addNewTask={this.addNewTask}
+        currentUser={this.state.currentUser}
+        userTasks={this.state.userTasks}
+        prioritize={this.prioritize}
+        deleteTask={this.deleteTask}
+        usersPrioritizedTasks={this.state.usersPrioritizedTasks}
+        // viewSavedPrioritized={this.viewSavedPrioritized}
+        updateStateFromDrop={this.updateStateFromDrop}
+        editCompleted={this.editCompleted}
+        wip={this.state.wip}
+        complete={this.state.complete}
+        havePrioritized={this.state.havePrioritized}
+        routerProps={routerProps}
+      />
+    );
+  }
+
+  renderPomodoro = (routerProps) => {
+    return (
+      <Pomodoro
+        defaultBreakLength="5"
+        defaultSessionLength="25"
+        routerProps={routerProps}
+        />
+    );
+  };
+
   persistOrdered = task => {
     fetch(`http://localhost:3000/api/v1/tasks/${task.id}`, {
       method: "PATCH",
@@ -211,36 +245,10 @@ class Main extends React.Component {
         ) : null}
         <Route path="/register" render={this.renderRegister} />
         {this.state.currentUser ? (
-          <Route
-            path="/list"
-            render={() => (
-              <ViewList
-                key={ViewList.id}
-                allTasks={this.state.allTasks}
-                showTaskForm={this.showTaskForm}
-                newFormOpen={this.state.newFormOpen}
-                addNewTask={this.addNewTask}
-                currentUser={this.state.currentUser}
-                userTasks={this.state.userTasks}
-                prioritize={this.prioritize}
-                deleteTask={this.deleteTask}
-                usersPrioritizedTasks={this.state.usersPrioritizedTasks}
-                // viewSavedPrioritized={this.viewSavedPrioritized}
-                updateStateFromDrop={this.updateStateFromDrop}
-                editCompleted={this.editCompleted}
-                wip={this.state.wip}
-                complete={this.state.complete}
-                havePrioritized={this.state.havePrioritized}
-              />
-            )}
-          />
-        ): null}
+          <Route path="/list" render={this.renderViewList} />
+        ) : null}
         <Route path="/welcome" render={this.renderWelcome} />
-        <Route path="/pomodoro"
-          render={() => (
-            <Pomodoro defaultBreakLength="5" defaultSessionLength="25" />
-          )}
-        />
+        <Route path="/pomodoro" render={this.renderPomodoro} />
         <Switch />
       </div>
     );

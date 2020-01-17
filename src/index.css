@@ -113,6 +113,7 @@ li {
   background-color: #e6e6e6;
   border-radius: 4px;
   transition: height 0.99s ease-out;
+  color: rgb(124, 114, 114);
 }
 
 .droppable {
