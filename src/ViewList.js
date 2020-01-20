@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import { Spring } from 'react-motion';
+import {Spring} from 'react-spring/renderprops'
 // import {TransitionMotion, spring, presets} from 'react-motion'; own thing with spme using react router
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
@@ -18,18 +18,6 @@ class ViewList extends React.Component {
   state = {
     dense: false,
   }
-
-
-
-
-
-
-
-
-
-
-
-  
 
   onDragStart = (ev, task) => {
     ev.dataTransfer.setData("id", task.id);
@@ -127,13 +115,6 @@ class ViewList extends React.Component {
   render() {
 
 
-
-
-
-
-
-
-
     // const useStyles = makeStyles(theme => ({
     //   modal: {
     //     display: 'flex',
@@ -164,16 +145,26 @@ class ViewList extends React.Component {
     
     return (
       <div className="main">
-
         <div className="container-drag">
+        <Spring
+      from={{
+        // Start invisible and offscreen
+        opacity: 0, marginTop: -1000,
+      }}
+      to={{
+        // End fully visible and in the middle of the screen
+        opacity: 1, marginTop: 0,
+      }}
+    >
+      { props => (
           <div
             className="wip"
             onDragOver={e => this.onDragOver(e)}
             onDrop={e => {
               this.onDrop(e, "wip");
             }}
+            style={props}
           >
-   
             <span className="task-header">
               {this.props.currentUser.username}'s To-Dos
             </span>
@@ -191,21 +182,37 @@ class ViewList extends React.Component {
                control={<Switch color="secondary" onChange={() => this.props.prioritize()} />}
                label="Prioritize"
                labelPlacement="start"
-             />  
+             />
           </div>
+          )}
+            </Spring>
+
+            <Spring
+      from={{
+        // Start invisible and offscreen
+        opacity: 0, marginTop: -1000,
+      }}
+      to={{
+        // End fully visible and in the middle of the screen
+        opacity: 1, marginTop: 0,
+      }}
+    >  
+         { props => (
           <div
             className="droppable"
             onDragOver={e => this.onDragOver(e)}
             onDrop={e => this.onDrop(e, "complete")}
+            style={props}
           >
             <span className="task-header">COMPLETED</span>
             {this.props.userTasks.length > 0 && this.props.complete !== []
               ? this.renderComplete()
               : null}
           </div>
+            )}
+          </Spring>
         </div>
         {/* end container drag */}
-        {/* </Spring> */}
 
         <div className="create-form">
           {this.props.newFormOpen ? (

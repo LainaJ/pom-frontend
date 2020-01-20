@@ -105,8 +105,8 @@ class Main extends React.Component {
     this.setState({
       allTasks: newTasks,
       userTasks: [...this.state.userTasks, newTaskObject],
-      usersPrioritizedTasks: [...this.state.usersPrioritizedTasks, newTaskObject
-      ]
+      usersPrioritizedTasks: [...this.state.usersPrioritizedTasks, newTaskObject],
+      newFormOpen: !this.state.newFormOpen
     });
   };
 
