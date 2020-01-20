@@ -4,7 +4,6 @@ import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
-  DatePicker,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import dateFormat from 'dateformat';
@@ -82,7 +81,8 @@ import dateFormat from 'dateformat';
             />
             <br />
             <label className="labels">Importance (1-5): </label>
-            <input
+            <input 
+              className="new-todo"
               type="text"
               name="importance"
               placeholder="e.g., 5 - super important"
@@ -98,6 +98,7 @@ import dateFormat from 'dateformat';
             /> 
             <label className="labels">Predicted Pomodoros: </label>
             <input
+              className="new-todo"
               type="text"
               name="predicted_pom"
               placeholder="e.g., 3"
