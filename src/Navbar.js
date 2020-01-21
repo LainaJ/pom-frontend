@@ -59,6 +59,14 @@ class Navbar extends React.Component {
         >
           Home
         </NavLink>
+        {/* <NavLink
+          to="/calendar"
+          exact
+          style={link}
+          activeStyle={{ background: "darkgrey" }}
+        >
+          Calendar
+        </NavLink> */}
           
         {/* <p className="app-title">POM</p> */}
       </div>

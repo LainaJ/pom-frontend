@@ -4,6 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
+import DateRangeIcon from '@material-ui/icons/DateRange';
 
 
 class TaskListItem extends React.Component {
@@ -34,6 +35,14 @@ class TaskListItem extends React.Component {
         <IconButton edge="end" >
           <AccessAlarmIcon
             onClick={() => this.props.routerProps.history.push("/pomodoro")}
+            />
+        </IconButton>: null}
+        {this.props.task.category === "wip"?
+        <IconButton edge="end" >
+          <DateRangeIcon
+            onClick={() => this.props.routerProps.history.push({
+              pathname: "/calendar",
+              state: {detail: this.props.task}})}
             />
         </IconButton>: null}
         <IconButton edge="end" aria-label="delete">

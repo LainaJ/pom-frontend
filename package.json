@@ -23,6 +23,7 @@
     "react-motion": "^0.5.2",
     "react-scripts": "3.3.0",
     "react-spring": "8.0.19",
+    "react-tackle-box": "^2.1.0",
     "react-use-gesture": "5.0.0",
     "typeface-roboto": "0.0.75"
   },

@@ -5,6 +5,7 @@ import Login from './Login'
 import CreateUserForm from './CreateUserForm';
 import Pomodoro from './Pomodoro'
 import Welcome from './Welcome'
+import { render } from 'react-dom'
 // import { update } from 'lodash-es';
 // import ReactDOM from 'react-dom';
 // import Button from '@material-ui/core/Button';
@@ -14,6 +15,16 @@ import 'typeface-roboto';
 // import clamp from 'lodash-es/clamp'
 // import swap from 'lodash-move'
 // import { useGesture } from 'react-use-gesture'
+import { Calendar, momentLocalizer, Views } from 'react-big-calendar';
+import moment from 'moment';
+import 'react-big-calendar/lib/css/react-big-calendar.css'
+import ExampleControlSlot from './ExampleControlSlot'
+
+
+// this weird syntax is just a shorthand way of specifying loaders
+// require('style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css')
+
+const localizer = momentLocalizer(moment)
 
 
 class Main extends React.Component {
@@ -29,7 +40,9 @@ class Main extends React.Component {
     havePrioritized: false,
     haveSavedPrioritized: false,
     wip: [],
-    complete: []
+    complete: [],
+    scheduledTasks: [],
+    taskToSchedule: []
   };
 
   componentDidMount() {
@@ -99,7 +112,6 @@ class Main extends React.Component {
     });
   };
 
-  //the third line of this is sometimes the difference between bugginess//look into otherwise
   addNewTask = newTaskObject => {
     let newTasks = [...this.state.allTasks, newTaskObject]
     this.setState({
@@ -206,6 +218,45 @@ class Main extends React.Component {
     );
   };
 
+  renderCalendar = (routerProps) => {
+    if (routerProps.history.location.state.detail) {
+    let task = routerProps.history.location.state.detail
+    console.log(task)
+
+    return (
+      <>
+      <div id="control-slot">
+
+        <ExampleControlSlot.Entry>  
+          <strong>
+            Drag the mouse over the calendar to select a date/time range.
+            {/* Click an event to see more info. */}
+          </strong>
+        </ExampleControlSlot.Entry>
+        </div>
+        <Calendar
+          selectable
+          localizer={localizer}
+          events={this.state.userTasks}
+          startAccessor="start"
+          endAccessor="end"
+          style={{ height: 500 }}
+          defaultView={Views.WEEK}
+          scrollToTime={new Date(1970, 1, 1, 6)}
+          onSelectEvent={event => alert(event.title)}
+          onSelectSlot={(e) => this.handleSelect(e, task)}
+        />
+      </>
+    );
+
+    }
+    else {
+       
+    }
+
+
+  };
+
   persistOrdered = task => {
     fetch(`http://localhost:3000/api/v1/tasks/${task.id}`, {
       method: "PATCH",
@@ -229,9 +280,28 @@ class Main extends React.Component {
     });
   };
 
+  handleSelect = ({ start, end }, task ) => {
+    const title = task.description
+    // window.prompt(`Please type Yes to confirm scheduling ${task.description}.`)
+    console.log(task)
+    if (title)
+      this.setState({
+        userTasks: [
+          ...this.state.userTasks,
+          {
+            start,
+            end,
+            title: task.description,
+          },
+        ],
+        scheduledTasks: [...this.state.scheduledTasks, task]
+      })
+  }
+
+
   render() {
     return (
-      <div className="demo8-outer">
+      <div >
         {/* <div className="persist-saved-tasks">             */}
         {this.state.haveSavedPrioritized
           ? this.state.usersPrioritizedTasks.map(task =>
@@ -249,6 +319,7 @@ class Main extends React.Component {
         ) : null}
         <Route path="/welcome" render={this.renderWelcome} />
         <Route path="/pomodoro" render={this.renderPomodoro} />
+        <Route path="/calendar" render={this.renderCalendar} />
         <Switch />
       </div>
     );

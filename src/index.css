@@ -401,3 +401,7 @@ button {
   align-content: center;
   text-align: center;
 }
+
+#control-slot{
+  text-align: center;
+}
