@@ -131,7 +131,7 @@ li {
   background-color: #e6cdd6;
   width:100%;
   color: white;
-  opacity: 50%;
+  /* opacity: 50%; */
   font-size: 20px;
   font-weight: 400;
   border-radius: 6px;
@@ -316,10 +316,12 @@ li {
   font-size: 5rem;
   font-weight: 700;
 }
-/* 
-.welcome-div{
 
-} */
+.welcome-div{
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
 
 
 button {

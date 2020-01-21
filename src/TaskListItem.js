@@ -25,11 +25,11 @@ class TaskListItem extends React.Component {
         <p>{this.props.task.description}</p>
         <p>Importance: {this.props.task.importance}</p>
         <p>Due: {this.props.task.urgency}</p>
-        {this.props.currentUser !== null ? (
+        {/* {this.props.currentUser !== null ? (
           <IconButton edge="end">
             <EditIcon onClick={() => null} />
           </IconButton>
-        ) : null}
+        ) : null} */}
         {this.props.task.category === "wip"?
         <IconButton edge="end" >
           <AccessAlarmIcon
