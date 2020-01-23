@@ -17,7 +17,7 @@ class Welcome extends Component {
         }}
         to={{
           // End fully visible and in the middle of the screen
-          opacity: .7,
+          opacity: .8,
           marginTop: 0
         }}
       >

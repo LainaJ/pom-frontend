@@ -223,10 +223,10 @@ class Main extends React.Component {
       <div id="control-slot">
 
         <ExampleControlSlot.Entry>  
-          <strong >
+          <p >
             Click and drag the mouse over a date/time range below.
             {/* Click an event to see more info. */}
-          </strong>
+          </p>
         </ExampleControlSlot.Entry>
         </div>
         <Calendar
@@ -235,7 +235,7 @@ class Main extends React.Component {
           events={this.state.userTasks}
           startAccessor="start"
           endAccessor="end"
-          style={{ height: 500, marginTop: 20 }}
+          style={{ height: 500, marginTop: 20, backgroundColor: 'white', borderRadius: '4px' }}
           defaultView={Views.WEEK}
           scrollToTime={new Date(1970, 1, 1, 6)}
           onSelectEvent={event => alert(event.title)}
