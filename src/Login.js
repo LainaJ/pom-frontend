@@ -1,9 +1,8 @@
 import React from 'react';
-// import ReactDOM from 'react-dom';
-// import { NavLink } from 'react-router-dom';
-// import CreateUserForm from './CreateUserForm'
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import './index.css';
-
+// import { withStyles } from '@material-ui/core/styles'
 
 class Login extends React.Component {
   state = {
@@ -23,42 +22,41 @@ class Login extends React.Component {
     this.props.login({
       username: this.state.username
     });
-    //then call a function that sets state of UserTasks to those that match the current ID
     this.props.routerProps.history.push("/welcome");
   };
 
   render() {
     return (
-      <div>
-        <form className="login-form" onSubmit={this.handleSubmitLogin}>
-          <div>
-            <label htmlFor="username">Username</label>
-            <input
+      <div className="create-form">
+        <form className="classes.root" onSubmit={this.handleSubmitLogin}>
+        <div>
+        <TextField 
+        id="standard-basic"
+              label="Username"
               type="text"
               name="username"
-              placeholder="Username"
               onChange={e => this.handleChange(e)}
               value={this.state.username}
             />
           </div>
           <div>
-            <label htmlFor="password">Password</label>
-            <input
+          <TextField 
+          id="standard-basic"
+              label="Password"
+              htmlFor="password"
               type="password"
               name="password"
-              placeholder="Password"
               onChange={e => this.handleChange(e)}
               value={this.state.password}
             />
           </div>
-          <input type="submit" value="Login" />
+          <br/>
+          <Button type="submit" label="Login">Login</Button>
         </form>
-        <button
-          onClick={() => this.props.routerProps.history.push("/register")}
-        >
-          {" "}
-          No Account? Register Here
-        </button>
+        <br/>
+        <Button onClick={() => this.props.routerProps.history.push("/register")}>
+          No Account? Sign Up
+        </Button>
       </div>
     );
   }

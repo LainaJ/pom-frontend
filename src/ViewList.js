@@ -138,7 +138,7 @@ class ViewList extends React.Component {
             }}
             to={{
               opacity: 1,
-              marginTop: 0
+              marginTop: 60
             }}
           >
             {props => (
@@ -183,7 +183,7 @@ class ViewList extends React.Component {
             }}
             to={{
               opacity: 1,
-              marginTop: 0
+              marginTop: 60
             }}
           >
             {props => (
@@ -209,8 +209,9 @@ class ViewList extends React.Component {
         aria-describedby="simple-modal-description"
         open={this.props.showTaskForm}
         onClose={this.props.showTaskForm}
+        style={{alignItems:'center',justifyContent:'center'}}
       >
-        <div className="create-form modal-size" >
+        <div className="modal-size" >
           {this.props.newFormOpen ? (
             <CreateTaskForm
               addNewTask={this.props.addNewTask}

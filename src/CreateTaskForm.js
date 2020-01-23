@@ -7,13 +7,15 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import dateFormat from 'dateformat';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 
   class CreateTaskForm extends React.Component {
     
     state = {
       description: "",
-      importance: 0,
+      importance: "",
       urgency: 0,
       predicted_pom: 0
     }
@@ -68,20 +70,18 @@ import dateFormat from 'dateformat';
     render() {
       return (
         <div>
-          <h1>Add a Task</h1>
+          <h1 className="add-task-header" >Add a Task</h1>
           <form onSubmit={this.handleSubmitForm}>
-            <label className="labels">Task: </label>
-            <input
+          <TextField id="standard-basic" label="Task" 
               className="new-todo"
               type="text"
               name="description"
               placeholder="(e.g., Write blog post)"
               value={this.state.description}
               onChange={e => this.handleChange(e)}
-            />
+              />
             <br />
-            <label className="labels">Importance (1-5): </label>
-            <input 
+            <TextField id="standard-basic" label="Importance (1-5)" 
               className="new-todo"
               type="text"
               name="importance"
@@ -96,8 +96,7 @@ import dateFormat from 'dateformat';
               value={this.state.urgency}
               // onChange={e => this.handleChange(e)}
             /> 
-            <label className="labels">Predicted Pomodoros: </label>
-            <input
+           <TextField id="standard-basic" label="Predicted Poms" 
               className="new-todo"
               type="text"
               name="predicted_pom"
@@ -117,7 +116,7 @@ import dateFormat from 'dateformat';
               />
             </MuiPickersUtilsProvider>
             <br />
-            <input type="submit" value="Save Task" />
+            <Button type="submit">Save Task </Button>
           </form>
         </div>
       );

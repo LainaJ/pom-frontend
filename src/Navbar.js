@@ -1,39 +1,62 @@
 import React from 'react';
 // import ReactDOM from 'react-dom';
 import { NavLink } from 'react-router-dom';
+import AppBar from '@material-ui/core/appbar'
 import './index.css';
 import 'typeface-roboto';
+import Link from '@material-ui/core/link'
 
 
 const link = {
     width: '120px',
     padding: '12px',
     margin: '6px 6px 6px 6px',
-    background: 'lightgrey',
+    // background: 'lightgrey',
     textDecoration: 'none',
     color: 'white',
-    textAlign: 'center'
+    textAlign: 'center',
   }
 
 class Navbar extends React.Component {
   render() {
     return (
       <div className="nav">
+        {/* <AppBar position="fixed"> */}
+        <NavLink
+          to="/welcome"
+          exact
+          style={link}
+          activeStyle={{ background: "darkgrey" }}
+        >
+          Home
+        </NavLink>
+        {this.props.currentUser?
+        
+          <Link
+          href="http://localhost:3001/welcome"
+          style={link}
+          activeStyle={{ background: "darkgrey" }}
+        >
+          Logout
+        </Link>
+       :
         <NavLink
           to="/login"
           exact
           style={link}
           activeStyle={{ background: "darkgrey" }}
+          className="link"
         >
           Login
-        </NavLink>
+        </NavLink>}
+
         <NavLink
           to="/register"
           exact
           style={link}
           activeStyle={{ background: "darkgrey" }}
         >
-          Register
+          Sign Up
         </NavLink>
         <NavLink
           to="/list"
@@ -51,14 +74,6 @@ class Navbar extends React.Component {
         >
           Pomodoro
         </NavLink>
-        <NavLink
-          to="/welcome"
-          exact
-          style={link}
-          activeStyle={{ background: "darkgrey" }}
-        >
-          Home
-        </NavLink>
         {/* <NavLink
           to="/calendar"
           exact
@@ -69,6 +84,7 @@ class Navbar extends React.Component {
         </NavLink> */}
           
         {/* <p className="app-title">POM</p> */}
+        {/* </AppBar> */}
       </div>
     );
   }

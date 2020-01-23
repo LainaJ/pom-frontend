@@ -6,23 +6,18 @@ import CreateUserForm from './CreateUserForm';
 import Pomodoro from './Pomodoro'
 import Welcome from './Welcome'
 import { render } from 'react-dom'
-// import { update } from 'lodash-es';
-// import ReactDOM from 'react-dom';
-// import Button from '@material-ui/core/Button';
 import { Route, Switch } from 'react-router-dom';
 import 'typeface-roboto';
-// import {TransitionMotion, spring, presets} from 'react-motion';
-// import clamp from 'lodash-es/clamp'
-// import swap from 'lodash-move'
-// import { useGesture } from 'react-use-gesture'
 import { Calendar, momentLocalizer, Views } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import ExampleControlSlot from './ExampleControlSlot'
-
-
-// this weird syntax is just a shorthand way of specifying loaders
-// require('style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css')
+import Navbar from "./Navbar";
+// import {TransitionMotion, spring, presets} from 'react-motion';
+// import clamp from 'lodash-es/clamp'
+// import swap from 'lodash-move'
+// import { useGesture } from 'react-use-gesture'
+// import Button from '@material-ui/core/Button';
 
 const localizer = momentLocalizer(moment)
 
@@ -43,7 +38,7 @@ class Main extends React.Component {
     complete: [],
     scheduledTasks: [],
     taskToSchedule: []
-  };
+  }
 
   componentDidMount() {
     fetch("http://localhost:3000/api/v1/tasks")
@@ -54,19 +49,19 @@ class Main extends React.Component {
           //   ,
           //   complete: taskData.filter(task => task.category === "complete")
         })
-      );
+      )
     fetch("http://localhost:3000/api/v1/users")
       .then(resp => resp.json())
       .then(userData =>
         this.setState({
           allUsers: userData
         })
-      );
+      )
   }
 
   renderRegister = routerProps => {
-    return <CreateUserForm routerProps={routerProps} />;
-  };
+    return <CreateUserForm routerProps={routerProps} />
+  }
 
   renderLogin = routerProps => {
     return (
@@ -229,7 +224,7 @@ class Main extends React.Component {
 
         <ExampleControlSlot.Entry>  
           <strong>
-            Drag the mouse over the calendar to select a date/time range.
+            Click and drag the mouse over a date/time range below.
             {/* Click an event to see more info. */}
           </strong>
         </ExampleControlSlot.Entry>
@@ -240,7 +235,7 @@ class Main extends React.Component {
           events={this.state.userTasks}
           startAccessor="start"
           endAccessor="end"
-          style={{ height: 500 }}
+          style={{ height: 500, marginTop: 20 }}
           defaultView={Views.WEEK}
           scrollToTime={new Date(1970, 1, 1, 6)}
           onSelectEvent={event => alert(event.title)}
@@ -302,13 +297,12 @@ class Main extends React.Component {
   render() {
     return (
       <div >
-        {/* <div className="persist-saved-tasks">             */}
         {this.state.haveSavedPrioritized
           ? this.state.usersPrioritizedTasks.map(task =>
               this.persistOrdered(task)
             )
           : null}
-        {/* </div> */}
+        <Navbar currentUser={this.state.currentUser} />
         <Switch />
         {!this.state.currentUser ? (
           <Route path="/login" render={this.renderLogin} />
