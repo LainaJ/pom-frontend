@@ -223,7 +223,7 @@ class Main extends React.Component {
       <div id="control-slot">
 
         <ExampleControlSlot.Entry>  
-          <strong>
+          <strong >
             Click and drag the mouse over a date/time range below.
             {/* Click an event to see more info. */}
           </strong>

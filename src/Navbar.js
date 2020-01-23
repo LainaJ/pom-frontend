@@ -26,7 +26,8 @@ class Navbar extends React.Component {
           to="/welcome"
           exact
           style={link}
-          activeStyle={{ background: "darkgrey" }}
+          activeStyle={{ background: '#F3DEC9' }}
+          className="navlink"
         >
           Home
         </NavLink>
@@ -35,7 +36,8 @@ class Navbar extends React.Component {
           <Link
           href="http://localhost:3001/welcome"
           style={link}
-          activeStyle={{ background: "darkgrey" }}
+          activeStyle={{ background: '#F3DEC9'}}
+          className="navlink"
         >
           Logout
         </Link>
@@ -44,8 +46,8 @@ class Navbar extends React.Component {
           to="/login"
           exact
           style={link}
-          activeStyle={{ background: "darkgrey" }}
-          className="link"
+          activeStyle={{ background: '#F3DEC9' }}
+          className="navlink"
         >
           Login
         </NavLink>}
@@ -54,7 +56,8 @@ class Navbar extends React.Component {
           to="/register"
           exact
           style={link}
-          activeStyle={{ background: "darkgrey" }}
+          activeStyle={{ background: '#F3DEC9' }}
+          className="navlink"
         >
           Sign Up
         </NavLink>
@@ -62,7 +65,8 @@ class Navbar extends React.Component {
           to="/list"
           exact
           style={link}
-          activeStyle={{ background: "darkgrey" }}
+          activeStyle={{ background: '#F3DEC9' }}
+          className="navlink"
         >
           List
         </NavLink>
@@ -70,7 +74,8 @@ class Navbar extends React.Component {
           to="/pomodoro"
           exact
           style={link}
-          activeStyle={{ background: "darkgrey" }}
+          activeStyle={{ background: '#F3DEC9' }}
+          className="navlink"
         >
           Pomodoro
         </NavLink>
