@@ -13,7 +13,7 @@
     "dateformat": "^3.0.3",
     "install": "^0.13.0",
     "lodash": "^4.17.15",
-    "lodash-es": "4.17.11",
+    "lodash-es": ">=4.17.14",
     "lodash-move": "1.1.1",
     "material-kit": "^2.0.4",
     "material-kit-react": "^1.8.0",
