@@ -1,23 +1,17 @@
-import React from 'react';
-import './App.css';
-import Main from './Main'
-
+import React from "react";
+import Navbar from "./Navbar";
+import "./index.css";
+import Main from "./Main";
 
 class App extends React.Component {
-
-  render () {
+  render() {
     return (
-    <div class="demo8-outer">
-        <Main /> 
-      
-    </div>
-    )
+      <>
+        {/* <Navbar /> */}
+        <Main />
+      </>
+    );
   }
-
-
-
 }
-
-
 
 export default App;

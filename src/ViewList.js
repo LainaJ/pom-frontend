@@ -1,141 +1,228 @@
 import React from 'react';
 import TaskListItem from './TaskListItem';
-import './App.css';
-import {Motion, spring} from 'react-motion';
-import { range } from 'lodash';
+import './index.css';
+import CreateTaskForm from './CreateTaskForm'
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Modal from '@material-ui/core/Modal';
+import {Spring} from 'react-spring/renderprops'
+import IconButton from '@material-ui/core/IconButton';
+import AddIcon from '@material-ui/icons/Add';
 
 
-function reinsert(arr, from, to) {
-  const _arr = arr.slice(0);
-  const val = _arr[from];
-  _arr.splice(from, 1);
-  _arr.splice(to, 0, val);
-  return _arr;
-}
-
-function clamp(n, min, max) {
-  return Math.max(Math.min(n, max), min);
-}
-
-const springConfig = {stiffness: 300, damping: 50};
-const itemsCount = 4;
-
+// const styles = withStyles(theme => ({
+//   modal: {
+//     display: 'flex',
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+//   paper: {
+//     backgroundColor: theme.palette.background.paper,
+//     border: '2px solid #000',
+//     boxShadow: theme.shadows[5],
+//     padding: theme.spacing(2, 4, 3),
+//   },
+// }));
 
 class ViewList extends React.Component {
 
   state = {
-    topDeltaY: 0,
-    mouseY: 0,
-    isPressed: false,
-    originalPosOfLastPressed: 0,
-    order: range(itemsCount),
-    };
+    dense: false,
+  }
 
-
-    renderTasks = () => {
-        return this.props.allTasks.map(task => <TaskListItem task={task} /> )
-    }
-
-
-    componentDidMount() {
-      window.addEventListener('touchmove', this.handleTouchMove);
-      window.addEventListener('touchend', this.handleMouseUp);
-      window.addEventListener('mousemove', this.handleMouseMove);
-      window.addEventListener('mouseup', this.handleMouseUp);
+  onDragStart = (ev, task) => {
+    ev.dataTransfer.setData("id", task.id);
   };
 
-  handleTouchStart = (key, pressLocation, e) => {
-      this.handleMouseDown(key, pressLocation, e.touches[0]);
+  onDragOver = ev => {
+    ev.preventDefault();
   };
 
-  handleTouchMove = (e) => {
-      e.preventDefault();
-      this.handleMouseMove(e.touches[0]);
-  };
-
-  handleMouseDown = (pos, pressY, {pageY}) => {
-      this.setState({
-      topDeltaY: pageY - pressY,
-      mouseY: pressY,
-      isPressed: true,
-      originalPosOfLastPressed: pos,
-      });
-  };
-
-  handleMouseMove = ({pageY}) => {
-      const {isPressed, topDeltaY, order, originalPosOfLastPressed} = this.state;
-
-      if (isPressed) {
-      const mouseY = pageY - topDeltaY;
-      const currentRow = clamp(Math.round(mouseY / 100), 0, itemsCount - 1);
-      let newOrder = order;
-
-      if (currentRow !== order.indexOf(originalPosOfLastPressed)){
-          newOrder = reinsert(order, order.indexOf(originalPosOfLastPressed), currentRow);
+  onDrop = (ev, category) => {
+    let id = ev.dataTransfer.getData("id");
+    let tasks = this.props.userTasks.filter(task => {
+      let newId = parseInt(id);
+      if (task.id === newId) {
+        task.category = category;
       }
+      return task;
+    })
+    this.props.updateStateFromDrop(tasks)
+    
+    tasks.map(task => 
+      fetch(`http://localhost:3000/api/v1/tasks/${task.id}`, {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
+          accept: "application/json"
+        },
+        body: JSON.stringify({
+          category: task.category
+        })
+      }).then(response => response.json())
+    )
+  }
 
-      this.setState({
-          mouseY: mouseY,
-          order: newOrder
-      });
-      }
+  renderPrioritized = () => {
+    let wipPrioritized = this.props.usersPrioritizedTasks.filter(task => task.category === "wip")
+          return wipPrioritized.map(task => (
+            <div
+              key={task.id}
+              onDragStart={e => this.onDragStart(e, task)}
+              draggable="true"
+              className="draggable"
+              task={task}
+            >
+              <TaskListItem
+                key={task.id}
+                task={task}
+                deleteTask={this.props.deleteTask}
+                routerProps={this.props.routerProps}
+              />
+            </div>
+          ))
+  }
+
+  renderTodos = () => {
+    let wip = this.props.userTasks.filter(task => task.category === "wip")
+    return wip.map(task => (
+      <div
+        key={task.id}
+        onDragStart={e => this.onDragStart(e, task)}
+        draggable="true"
+        className="draggable"
+        task={task}
+      >
+     
+        <TaskListItem
+          key={task.id}
+          task={task}
+          deleteTask={this.props.deleteTask}
+          routerProps={this.props.routerProps}
+        />
+      </div>
+    ));
   };
 
-  handleMouseUp = () => {
-      this.setState({
-          isPressed: false, 
-          topDeltaY: 0
-      });
-  };  
+  renderComplete = () => {
+    let completed = this.props.userTasks.filter(task => task.category === "complete")
+    return completed.map(task => (
+      <div
+        key={task.id}
+        onDragStart={e => this.onDragStart(e, task)}
+        draggable="true"
+        className="draggable"
+        task={task}
+      >
+        <TaskListItem
+          key={task.id}
+          task={task}
+          deleteTask={this.props.deleteTask}
+        />
+      </div>
+    ));
+  };
+
 
   render() {
-    const {mouseY, isPressed, originalPosOfLastPressed, order} = this.state;
-
+    // const { classes } = this.props; 
     return (
-    <div className="demo8">
-       {/* {this.renderTasks()} */}
-        {this.props.allTasks.map(task => {
-        const style = originalPosOfLastPressed === task && isPressed
-            ? {
-                scale: spring(1.1, springConfig),
-                shadow: spring(16, springConfig),
-                y: mouseY,
-            }
-            : {
-                scale: spring(1, springConfig),
-                shadow: spring(1, springConfig),
-                y: spring(order.indexOf(task) * 100, springConfig),
-            };
-        return (
-            <Motion style={style} key={task}>
-            {({scale, shadow, y}) =>
-                <div
-                onMouseDown={this.handleMouseDown.bind(null, task, y)}
-                onTouchStart={this.handleTouchStart.bind(null, task, y)}
-                className="demo8-item"
-                style={{
-                    boxShadow: `rgba(0, 0, 0, 0.2) 0px ${shadow}px ${2 * shadow}px 0px`,
-                    transform: `translate3d(0, ${y}px, 0) scale(${scale})`,
-                    WebkitTransform: `translate3d(0, ${y}px, 0) scale(${scale})`,
-                    zIndex: task === originalPosOfLastPressed ? 99 : task,
-                }}>
-                {order.indexOf(task) + 1} {task.description} 
-                
-                </div>
-            }
-            </Motion>
-        );
-        })}
-    </div>
+      <div className="main">
+        <div className="container-drag">
+          <Spring
+            from={{
+              opacity: 0,
+              marginTop: -1000
+            }}
+            to={{
+              opacity: 1,
+              marginTop: 60
+            }}
+          >
+            {props => (
+              <div
+                className="wip"
+                onDragOver={e => this.onDragOver(e)}
+                onDrop={e => {
+                  this.onDrop(e, "wip");
+                }}
+                style={props}
+              >
+                <span className="task-header">
+                  {this.props.currentUser.username}'s To-Dos
+                </span>
+                {this.props.havePrioritized === false
+                  ? this.renderTodos()
+                  : this.renderPrioritized()}
+                {this.props.currentUser !== null ? (
+                  <IconButton edge="end">
+                    <AddIcon onClick={() => this.props.showTaskForm()} />
+                  </IconButton>
+                ) : null}
+                <FormControlLabel
+                  value="Prioritize"
+                  control={
+                    <Switch
+                      color="secondary"
+                      onChange={() => this.props.prioritize()}
+                    />
+                  }
+                  label="Prioritize"
+                  labelPlacement="start"
+                />
+              </div>
+            )}
+          </Spring>
+
+          <Spring
+            from={{
+              opacity: 0,
+              marginTop: -1000
+            }}
+            to={{
+              opacity: 1,
+              marginTop: 60
+            }}
+          >
+            {props => (
+              <div
+                className="droppable"
+                onDragOver={e => this.onDragOver(e)}
+                onDrop={e => this.onDrop(e, "complete")}
+                style={props}
+              >
+                <span className="task-header">COMPLETED</span>
+                {this.props.userTasks.length > 0 && this.props.complete !== []
+                  ? this.renderComplete()
+                  : null}
+              </div>
+            )}
+          </Spring>
+        </div>
+        {/* end container drag */}
+      
+        {this.props.newFormOpen ? (
+        <Modal
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        open={this.props.showTaskForm}
+        onClose={this.props.showTaskForm}
+        style={{alignItems:'center',justifyContent:'center'}}
+      >
+        <div className="modal-size" >
+          {this.props.newFormOpen ? (
+            <CreateTaskForm
+              addNewTask={this.props.addNewTask}
+              currentUser={this.props.currentUser}
+            />
+          ) : null}
+        </div>
+        </Modal>
+        ) : null}
+      </div>
     );
-};
-
-
-
-
-
+  }
 }
-
 
 
 export default ViewList;
