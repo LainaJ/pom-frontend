@@ -4,10 +4,8 @@ import './index.css';
 import CreateTaskForm from './CreateTaskForm'
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-// import { withStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import {Spring} from 'react-spring/renderprops'
-// import {TransitionMotion, spring, presets} from 'react-motion'; own thing with spme using react router
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 
@@ -63,7 +61,7 @@ class ViewList extends React.Component {
         })
       }).then(response => response.json())
     )
-  }//end onDrop
+  }
 
   renderPrioritized = () => {
     let wipPrioritized = this.props.usersPrioritizedTasks.filter(task => task.category === "wip")

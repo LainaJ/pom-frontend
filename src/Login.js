@@ -2,28 +2,27 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import './index.css';
-// import { withStyles } from '@material-ui/core/styles'
 
 class Login extends React.Component {
   state = {
     username: "",
     password: ""
-  };
+  }
 
   handleChange = e => {
     this.setState({
       [e.target.name]: e.target.value
-    });
-  };
+    })
+  }
 
   handleSubmitLogin = e => {
-    e.preventDefault();
+    e.preventDefault()
 
     this.props.login({
       username: this.state.username
-    });
+    })
     this.props.routerProps.history.push("/welcome");
-  };
+  }
 
   render() {
     return (
@@ -58,7 +57,7 @@ class Login extends React.Component {
           No Account? Sign Up
         </Button>
       </div>
-    );
+    )
   }
 }
 

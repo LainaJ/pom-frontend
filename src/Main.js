@@ -5,7 +5,6 @@ import Login from './Login'
 import CreateUserForm from './CreateUserForm';
 import Pomodoro from './Pomodoro'
 import Welcome from './Welcome'
-import { render } from 'react-dom'
 import { Route, Switch } from 'react-router-dom';
 import 'typeface-roboto';
 import { Calendar, momentLocalizer, Views } from 'react-big-calendar';
@@ -13,14 +12,8 @@ import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import ExampleControlSlot from './ExampleControlSlot'
 import Navbar from "./Navbar";
-// import {TransitionMotion, spring, presets} from 'react-motion';
-// import clamp from 'lodash-es/clamp'
-// import swap from 'lodash-move'
-// import { useGesture } from 'react-use-gesture'
-// import Button from '@material-ui/core/Button';
 
 const localizer = momentLocalizer(moment)
-
 
 class Main extends React.Component {
   state = {
@@ -46,8 +39,6 @@ class Main extends React.Component {
       .then(taskData =>
         this.setState({
           allTasks: taskData
-          //   ,
-          //   complete: taskData.filter(task => task.category === "complete")
         })
       )
     fetch("http://localhost:3000/api/v1/users")
@@ -156,29 +147,6 @@ class Main extends React.Component {
     }
   };
 
-  // viewSavedPrioritized = () => {
-  //   this.state.usersPrioritizedTasks.map(
-  //     task =>
-  //       (task.priority_order =
-  //         this.state.usersPrioritizedTasks.indexOf(task) + 1)
-  //   )
-  //   this.setState({
-  //     haveSavedPrioritized: true
-  //   })
-  // };
-
-  // editCompleted = () => {
-  //   let userTasks = this.state.usersPrioritizedTasks.filter(
-  //     task => task.user_id === this.state.currentUser.id
-  //   );
-  //   let wip = userTasks.filter(task => task.category === "wip");
-  //   let complete = userTasks.filter(task => task.category === "complete");
-  //   this.setState({
-  //     wip: wip,
-  //     complete: complete
-  //   });
-  // };
-
   renderViewList = (routerProps) => {
     return (
       <ViewList
@@ -192,7 +160,6 @@ class Main extends React.Component {
         prioritize={this.prioritize}
         deleteTask={this.deleteTask}
         usersPrioritizedTasks={this.state.usersPrioritizedTasks}
-        // viewSavedPrioritized={this.viewSavedPrioritized}
         updateStateFromDrop={this.updateStateFromDrop}
         editCompleted={this.editCompleted}
         wip={this.state.wip}
@@ -225,7 +192,6 @@ class Main extends React.Component {
         <ExampleControlSlot.Entry>  
           <p >
             Click and drag the mouse over a date/time range below.
-            {/* Click an event to see more info. */}
           </p>
         </ExampleControlSlot.Entry>
         </div>
@@ -246,10 +212,7 @@ class Main extends React.Component {
 
     }
     else {
-       
     }
-
-
   };
 
   persistOrdered = task => {

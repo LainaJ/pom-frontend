@@ -11,12 +11,10 @@ class Welcome extends Component {
     return (
       <Spring
         from={{
-          // Start invisible and offscreen
           opacity: 0,
           marginTop: -1000
         }}
         to={{
-          // End fully visible and in the middle of the screen
           opacity: .8,
           marginTop: 0
         }}

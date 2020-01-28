@@ -19,16 +19,16 @@ class CreateUserForm extends React.Component {
     username: "",
     email: "",
     password: ""
-  };
+  }
   
   handleChange = e => {
     this.setState({
       [e.target.name]: e.target.value
-    });
-  };
+    })
+  }
 
   handleSubmitForm = e => {
-    e.preventDefault();
+    e.preventDefault()
 
     fetch("http://localhost:3000/api/v1/users", {
       method: "POST",
@@ -41,20 +41,9 @@ class CreateUserForm extends React.Component {
         email: this.state.email,
         password: this.state.password
       })
-    });
-    // <Link href="http://localhost:3001/login"></Link>
-    this.props.routerProps.history.push("/login");
-
-    // .then(response => response.json())
-    // .then(newTask => console.log(newTask))
-
-    // this renders it to the screen:
-    //   this.props.addNewUser({
-    //     username: this.state.username,
-    //     email: this.state.email,
-    //     password: this.state.password
-    //   })
-  };
+    })
+    this.props.routerProps.history.push("/login")
+  }
 
   render() {
     const { classes } = this.props;
@@ -70,7 +59,6 @@ class CreateUserForm extends React.Component {
             value={this.state.username}
             onChange={e => this.handleChange(e)}
           />
-
           <TextField
           id="standard-basic"
             label="Email"
@@ -79,7 +67,6 @@ class CreateUserForm extends React.Component {
             value={this.state.email}
             onChange={e => this.handleChange(e)}
           />
-
           <TextField
             label="Password"
             type="password"
@@ -91,9 +78,8 @@ class CreateUserForm extends React.Component {
           <Button type="submit">Create Account</Button>
         </form>
       </div>
-    );
+    )
   }
 }
-
 
   export default withStyles(useStyles)(CreateUserForm)
