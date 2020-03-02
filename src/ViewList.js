@@ -63,6 +63,7 @@ class ViewList extends React.Component {
     )
   }
 
+  
   renderPrioritized = () => {
     let wipPrioritized = this.props.usersPrioritizedTasks.filter(task => task.category === "wip")
           return wipPrioritized.map(task => (
