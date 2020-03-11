@@ -162,7 +162,7 @@ class Main extends React.Component {
         usersPrioritizedTasks={this.state.usersPrioritizedTasks}
         updateStateFromDrop={this.updateStateFromDrop}
         editCompleted={this.editCompleted}
-        wip={this.state.wip}
+        wip={this.state.wip}Y
         complete={this.state.complete}
         havePrioritized={this.state.havePrioritized}
         routerProps={routerProps}
@@ -184,7 +184,6 @@ class Main extends React.Component {
     if (routerProps.history.location.state.detail) {
     let task = routerProps.history.location.state.detail
     console.log(task)
-
     return (
       <>
       <div id="control-slot">
@@ -201,11 +200,12 @@ class Main extends React.Component {
           events={this.state.userTasks}
           startAccessor="start"
           endAccessor="end"
-          style={{ height: 500, marginTop: 20, backgroundColor: 'white', borderRadius: '4px' }}
+          style={{ height: 500, marginTop: 20, backgroundColor: 'white', borderRadius: '4px'}}
           defaultView={Views.WEEK}
           scrollToTime={new Date(1970, 1, 1, 6)}
           onSelectEvent={event => alert(event.title)}
           onSelectSlot={(e) => this.handleSelect(e, task)}
+    
         />
       </>
     );
