@@ -1,11 +1,9 @@
 import React from 'react';
-// import ReactDOM from 'react-dom';
 import { NavLink } from 'react-router-dom';
-import AppBar from '@material-ui/core/appbar'
 import './index.css';
 import 'typeface-roboto';
 import Link from '@material-ui/core/link'
-
+// import AppBar from '@material-ui/core/appbar'
 
 const link = {
     width: '120px',

@@ -9,21 +9,6 @@ import {Spring} from 'react-spring/renderprops'
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 
-
-// const styles = withStyles(theme => ({
-//   modal: {
-//     display: 'flex',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-//   paper: {
-//     backgroundColor: theme.palette.background.paper,
-//     border: '2px solid #000',
-//     boxShadow: theme.shadows[5],
-//     padding: theme.spacing(2, 4, 3),
-//   },
-// }));
-
 class ViewList extends React.Component {
 
   state = {
@@ -126,7 +111,6 @@ class ViewList extends React.Component {
 
 
   render() {
-    // const { classes } = this.props; 
     return (
       <div className="main">
         <div className="container-drag">
