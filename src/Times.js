@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import './Times.css';
 
 const formatTime = (timeLeftInSecond) => {
   let minute = Math.floor(timeLeftInSecond / 60);
@@ -17,7 +16,6 @@ class Times extends Component {
     return (
       <div className="times">
         <div className="times-content">
-          {/* <label id="timer-label">{this.props.timeLabel}</label> */}
           <span id="time-left">{formatTime(this.props.timeLeftInSecond)}</span>
         </div>
       </div>

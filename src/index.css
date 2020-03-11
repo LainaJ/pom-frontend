@@ -4,8 +4,6 @@ body {
   margin-bottom: 0;
   font-family: 
    'Roboto';
-  /* -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; */
 }
 
 .nav {
@@ -62,8 +60,6 @@ li {
   margin: auto;
   display: block;
   transition: height 0.99s ease-out;
-  /* height: 150px; */
-
 } 
 
 /* draggable features */
@@ -81,16 +77,13 @@ li {
   min-height: 20vh;
   background-color: #CFCFCA;
   border-radius: 4px;
-  /* transition: height 0.99s ease-out; */
   color: rgb(124, 114, 114);
   -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
       background-size: cover; 
-
     -webkit-animation: myfirst 2s ;
-    animation: myfirst 2s ;
-    
+    animation: myfirst 2s ; 
 }
 
 .droppable {
@@ -107,7 +100,6 @@ li {
     -moz-background-size: cover;
     -o-background-size: cover;
       background-size: cover; 
-
     -webkit-animation: myfirst 2s ; /* Chrome, Safari, Opera */
     animation: myfirst 2s ;
 }
@@ -117,7 +109,6 @@ li {
   display: inline-block;
   margin: 0;
   padding: 0;
-  /* width:100%; */
 } 
 
 .task-header {
@@ -125,7 +116,6 @@ li {
   background-color: #F3DEC9	;
   width:100%;
   color: white;
-  /* opacity: 50%; */
   font-size: 20px;
   font-weight: 400;
   border-radius: 6px;
@@ -168,7 +158,6 @@ li {
 
 @media (min-width: 768px) {
   .pomodoro-clock {
-    /* width: 768px; */
     margin: 0 0;
   }
   .pomodoro-clock-header-name::before {
@@ -192,7 +181,6 @@ li {
   justify-content: center;
   margin-top: 15px;
   margin-bottom: 0;
-  
 }
 
 .controller button {
@@ -338,14 +326,12 @@ padding-top: 10px;
  padding-bottom: 10px;
  }
 
-
 body {
   background: url(./jazmin-quaynor-18mUXUS8ksI-unsplash.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
       background-size: cover; 
-
     -webkit-animation: myfirst 5s ; 
     animation: myfirst 5s ;
 }
@@ -360,12 +346,9 @@ body {
   to {opacity: 1;}
 }
 
-
-
 button {
   margin: 0;
   padding: 0;
-  /* border: 2px; */
   background: none;
   font-size: 100%;
   vertical-align: baseline;
@@ -416,7 +399,6 @@ button {
   color: white;
 }
 
-
 .create-form{
   margin-top: 150px;
   align-items: center;
@@ -435,11 +417,9 @@ button {
   padding-top: 8px;
  }
 
-
 .add-task-header {
   margin-bottom: 2px;
 }
-
 
 .navlink:hover{
   cursor: pointer;
