@@ -162,7 +162,7 @@ class Main extends React.Component {
         usersPrioritizedTasks={this.state.usersPrioritizedTasks}
         updateStateFromDrop={this.updateStateFromDrop}
         editCompleted={this.editCompleted}
-        wip={this.state.wip}Y
+        wip={this.state.wip}
         complete={this.state.complete}
         havePrioritized={this.state.havePrioritized}
         routerProps={routerProps}
