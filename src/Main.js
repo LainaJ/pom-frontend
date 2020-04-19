@@ -256,10 +256,9 @@ class Main extends React.Component {
       })
   }
 
-
   render() {
     return (
-      <div >
+      <div>
         {this.state.haveSavedPrioritized
           ? this.state.usersPrioritizedTasks.map(task =>
               this.persistOrdered(task)
