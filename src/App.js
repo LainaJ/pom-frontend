@@ -8,8 +8,8 @@ class App extends React.Component {
       <>
         <Main />
       </>
-    );
+    )
   }
 }
 
-export default App;
+export default App
