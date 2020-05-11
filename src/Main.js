@@ -63,20 +63,20 @@ class Main extends React.Component {
         newUserFormOpen={this.state.newUserFormOpen}
         filterUserTasks={this.filterUserTasks}
       />
-    );
-  };
+    )
+  }
 
   login = enteredName => {
     let registeredUser = this.state.allUsers.find(
       user => user.username === enteredName.username
-    );
+    )
     return registeredUser
       ? this.setState({
           currentUser: registeredUser,
           userTasks: this.state.allTasks.filter(task => task.user_id === registeredUser.id)
         })
       : alert("You must first create an account.");
-  };
+  }
 
   renderWelcome = (routerProps) => {
     return (
@@ -89,14 +89,14 @@ class Main extends React.Component {
         wip={this.state.wip}
         complete={this.state.complete}
       />
-    );
-  };
+    )
+  }
 
   showTaskForm = () => {
     this.setState({
       newFormOpen: !this.state.newFormOpen
-    });
-  };
+    })
+  }
 
   addNewTask = newTaskObject => {
     let newTasks = [...this.state.allTasks, newTaskObject]
@@ -105,14 +105,14 @@ class Main extends React.Component {
       userTasks: [...this.state.userTasks, newTaskObject],
       usersPrioritizedTasks: [...this.state.usersPrioritizedTasks, newTaskObject],
       newFormOpen: !this.state.newFormOpen
-    });
-  };
+    })
+  }
 
   showCreateUserForm = () => {
     this.setState({
       newUserFormOpen: !this.state.newUserFormOpen
-    });
-  };
+    })
+  }
 
   deleteTask = taskObject => {
     let updatedTasks = this.state.allTasks.filter(
@@ -129,7 +129,7 @@ class Main extends React.Component {
       usersPrioritizedTasks: updatedPTasks,
       userTasks: updatedUserTasks
     })
-  };
+  }
 
   prioritize = () => {
     if (this.state.currentUser !== null) {
@@ -145,7 +145,7 @@ class Main extends React.Component {
         havePrioritized: !this.state.havePrioritized
       })
     }
-  };
+  }
 
   renderViewList = (routerProps) => {
     return (
@@ -167,7 +167,7 @@ class Main extends React.Component {
         havePrioritized={this.state.havePrioritized}
         routerProps={routerProps}
       />
-    );
+    )
   }
 
   renderPomodoro = (routerProps) => {
@@ -208,12 +208,12 @@ class Main extends React.Component {
     
         />
       </>
-    );
+    )
 
     }
     else {
     }
-  };
+  }
 
   persistOrdered = task => {
     fetch(`http://localhost:3000/api/v1/tasks/${task.id}`, {
@@ -227,7 +227,7 @@ class Main extends React.Component {
       })
     }).then(response => response.json());
     //   .then(updatedTasks => console.log("here's what persisted:", updatedTasks))
-  };
+  }
 
   updateStateFromDrop = tasks => {
     let wip = tasks.filter(task => task.category === "wip");
@@ -235,8 +235,8 @@ class Main extends React.Component {
     this.setState({
       wip: wip,
       complete: complete
-    });
-  };
+    })
+  }
 
   handleSelect = ({ start, end }, task ) => {
     const title = task.description
@@ -256,10 +256,9 @@ class Main extends React.Component {
       })
   }
 
-
   render() {
     return (
-      <div >
+      <div>
         {this.state.haveSavedPrioritized
           ? this.state.usersPrioritizedTasks.map(task =>
               this.persistOrdered(task)
@@ -279,7 +278,7 @@ class Main extends React.Component {
         <Route path="/calendar" render={this.renderCalendar} />
         <Switch />
       </div>
-    );
+    )
   }
 }
 
