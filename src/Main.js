@@ -71,7 +71,8 @@ class Main extends React.Component {
       user => user.username === enteredName.username
     )
     return registeredUser
-      ? this.setState({
+      ? 
+      this.setState({
           currentUser: registeredUser,
           userTasks: this.state.allTasks.filter(task => task.user_id === registeredUser.id)
         })
@@ -183,7 +184,6 @@ class Main extends React.Component {
   renderCalendar = (routerProps) => {
     if (routerProps.history.location.state.detail) {
     let task = routerProps.history.location.state.detail
-    console.log(task)
     return (
       <>
       <div id="control-slot">
@@ -241,7 +241,6 @@ class Main extends React.Component {
   handleSelect = ({ start, end }, task ) => {
     const title = task.description
     // window.prompt(`Please type Yes to confirm scheduling ${task.description}.`)
-    console.log(task)
     if (title)
       this.setState({
         userTasks: [
@@ -257,6 +256,7 @@ class Main extends React.Component {
   }
 
   render() {
+
     return (
       <div>
         {this.state.haveSavedPrioritized
